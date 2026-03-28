@@ -1,0 +1,185 @@
+
+  
+  .skill-node {
+    position: relative;
+    width: 3.5vw;
+    aspect-ratio: 1 / 1;
+    background-image: url('/public/talentbackground/mp2_frame_sliced.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-top: 10vh;
+  }
+
+  .skill-node-inner {
+  position: absolute;
+  inset: 8%;                 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  
+
+ .skill-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  /* filter: grayscale(100%); */
+  /* transition: filter 0.15s ease; */
+}
+
+/* .skill-node.allocated .skill-icon {
+  filter: none;
+} */
+
+.points {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  font-size: clamp(8px, 0.7vw, 12px);
+  color: #f0e0a0;
+  font-weight: bold;
+  line-height: 1;
+  pointer-events: none;
+}
+
+
+
+  .skill-node.allocated::after {
+  content: "";
+  position: absolute;
+  top: -.4vh;
+  left: -.2vw;
+  width: calc(100% + .4vw);
+  height: calc(100% + .8vh);
+  background-image: url('/public/talentbackground/mp2_frame sliced_white_bright_border.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+  
+  /* State: locked */
+  .skill-node.locked {
+    background-color: #222;
+    color: #555;
+    border-color: #333;
+    cursor: pointer;
+  }
+  
+  .skill-node.locked:hover {
+    transform: scale(1.05);
+    border-color: gold;
+    color: #aaa;
+  }
+  
+  /* Tooltip container — rendered via React Portal at document.body */
+  .skill-tooltip {
+    width: 260px;
+    padding: 8px;
+    background-color: rgba(10, 8, 5, 0.97);
+    color: #ddd;
+    border: 1px solid #555;
+    border-radius: 4px;
+    z-index: 99999;
+    pointer-events: none;
+    font-size: 0.78em;
+    line-height: 1.3;
+  }
+
+  .tooltip-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .tooltip-icon {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .tooltip-title {
+    font-size: 1.25em;
+    font-weight: bold;
+    color: #fff;
+    letter-spacing: 0.04em;
+  }
+
+  .tooltip-divider {
+    border-top: 1px solid #555;
+    margin-bottom: 4px;
+  }
+
+  .tooltip-requires-more-points {
+    color: #c0392b;
+    margin-bottom: 1px;
+  }
+
+  .tooltip-select-to-learn-text {
+    color: #e8c87a;
+    margin-bottom: 1px;
+  }
+
+  .tooltip-cost {
+    color: #aaa;
+    margin-bottom: 4px;
+  }
+
+  .tooltip-desc {
+    color: #ccc;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+
+  .tooltip-weapon-req {
+    color: #e8c87a;
+    margin-bottom: 4px;
+  }
+
+  .tooltip-damage-applies {
+    color: #ccc;
+    margin-bottom: 4px;
+  }
+
+  .tooltip-stats {
+    border-top: 1px solid #555;
+    padding-top: 4px;
+    margin-top: 2px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    color: #ccc;
+  }
+
+  .tooltip-statuses {
+    margin-top: 8px;
+    border-top: 1px solid #555;
+    padding-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .tooltip-status-entry {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tooltip-status-name {
+    color: #e8c87a;
+    font-style: italic;
+    font-size: 0.85em;
+  }
+
+  .tooltip-status-desc {
+    color: #ccc;
+    font-size: 0.8em;
+  }

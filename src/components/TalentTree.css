@@ -1,0 +1,96 @@
+.talent-tree-container{
+  position: relative;
+  width: 80vw;
+  height: 82vh;
+  margin: 0 auto;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: clamp(48px, 6vw, 92px) clamp(32px, 4vw, 64px) clamp(32px, 4vw, 64px);
+  border-image-source: url('/public/talentbackground/c_full_header.png');
+  border-image-slice: 240 170 170 170 fill;
+  border-image-repeat: stretch;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+}
+
+
+.skill-tree-grid {
+  flex: 1;
+  position: relative;      
+  min-height: 0;
+  min-width: 0;
+  margin-top: calc(-1.6 * clamp(48px, 6vw, 92px));
+}
+
+  html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.talent-tree-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: clamp(-85px, -5.4vw, -44px);
+  left: clamp(16px, 2vw, 28px);
+  right: clamp(16px, 2vw, 28px);
+  z-index: 2;
+  min-height: clamp(34px, 4vw, 54px);
+  padding: 0;
+  pointer-events: none;
+}
+
+.talent-tree-topbar * {
+  pointer-events: none;
+}
+
+.topbar-title {
+  font-size: clamp(16px, 2.2vw, 34px);
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.points-spent {
+  position: absolute;
+  right: clamp(8px, 1.5vw, 24px);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: clamp(12px, 1.2vw, 18px);
+  white-space: nowrap;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(8px, 1vw, 18px);
+}
+
+.compare-toggle-btn {
+  background: #2a2010;
+  color: #e8c87a;
+  border: 1px solid #6a5020;
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 0.75em;
+  cursor: pointer;
+  margin-left: 8px;
+  pointer-events: all;
+}
+
+.compare-toggle-btn:hover {
+  background: #3a300a;
+  border-color: #e8c87a;
+}
+
+.talent-tree-body {
+  flex: 1;                
+  display: flex;
+  min-height: 0;           
+  padding: 0.5rem 0;
+  position: relative;
+}
+  

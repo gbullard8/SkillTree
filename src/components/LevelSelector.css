@@ -1,0 +1,76 @@
+.level-selector-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.level-selector {
+  display: flex;
+  align-items: center;
+  gap: clamp(6px, 0.8vw, 14px);
+}
+
+.level-btn {
+  pointer-events: auto;
+  background: none;
+  border: 1px solid #a08060;
+  color: #e8d8b0;
+  font-size: clamp(16px, 1.6vw, 26px);
+  width: clamp(24px, 2vw, 36px);
+  height: clamp(24px, 2vw, 36px);
+  cursor: pointer;
+  border-radius: 4px;
+  line-height: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.level-btn:hover {
+  background: #a08060;
+  color: #1a1208;
+}
+
+.level-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: clamp(40px, 3.5vw, 60px);
+}
+
+.level-label {
+  font-size: clamp(9px, 0.8vw, 13px);
+  color: #a89060;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.level-number {
+  font-size: clamp(18px, 2vw, 30px);
+  color: #f0e0a0;
+  font-weight: bold;
+  line-height: 1.1;
+}
+
+.level-message {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 4px;
+  font-size: clamp(10px, 0.9vw, 14px);
+  color: #e05050;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

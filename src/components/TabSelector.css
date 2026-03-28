@@ -1,0 +1,53 @@
+  .tab-header-container {
+  background-image: url('/public/talentbackground/not_container_3.png');
+  background-size: 98.5% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 5;
+  width: calc(100% + clamp(32px, 4vw, 64px) + clamp(32px, 4vw, 64px));
+  margin-left: calc(0px - clamp(32px, 4vw, 64px));
+  margin-right: calc(0px - clamp(32px, 4vw, 64px));
+  margin-top: calc(-0.4 * clamp(48px, 6vw, 92px));
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(4px, 0.6vw, 12px);
+
+  min-height: clamp(-20px, -1.5vh, -8px);
+  padding: .8rem 2rem;
+  }
+
+
+  .tab-button {
+    position: relative;
+    width: clamp(40px, 4.8vw, 72px);
+    flex-shrink: 1;
+    aspect-ratio: 1 / 1;
+    background-image: url('/public/talentbackground/mp2_frame_sliced.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* Only when selected — overlay the silver border */
+  .tab-button.selected::after {
+    content: "";
+    position: absolute;
+    top: -.2vh;
+    left: -.2vw;
+    width: calc(100% + .3vw);
+    height: calc(100% + .3vh);
+    background-image: url('/public/talentbackground/mp2_frame sliced_white_bright_border.png');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    box-sizing: border-box;
+    z-index: 1;
+  }
