@@ -1,7 +1,7 @@
 import { SkillNode } from '../models/SkillNode';
 import { EQUIPMENT_TYPE_NAMES } from '../models/Action';
 import { TreeState } from '../context/TalentTreeContext';
-import { TIER_REQUIREMENTS } from '../utils/CanUnlock';
+import { getBlockingSibling, TIER_REQUIREMENTS, getSkillPointCost } from '../utils/CanUnlock';
 import { parseDescription } from '../utils/parseDescription';
 import { applyDamageRange } from '../utils/computeDamageRange';
 import { STATUS_EFFECTS } from '../data/statusEffects';
@@ -41,6 +41,7 @@ const ComparePanel = ({ nodes, treeState, onClose }: Props) => {
 
           const parentNode = node.requires ? nodes.find(n => n.id === node.requires) : null;
           const parentName = parentNode?.skill.skillName ?? null;
+          const blockingSibling = getBlockingSibling(node, nodes, allocations);
 
           const tierRequired = TIER_REQUIREMENTS[node.tier] ?? 0;
           const pointsInLowerTiers = nodes
@@ -64,13 +65,15 @@ const ComparePanel = ({ nodes, treeState, onClose }: Props) => {
 
               {isUnlocked ? (
                 <div className="tooltip-select-to-learn-text">Allocated</div>
+              ) : blockingSibling ? (
+                <div className="tooltip-requires-more-points">Disabled by {blockingSibling.skill.skillName}</div>
               ) : !tierMet ? (
                 <div className="tooltip-requires-more-points">Requires {tierRequired} pts in previous tiers</div>
               ) : !parentMet ? (
                 <div className="tooltip-requires-more-points">Requires {parentName}</div>
               ) : null}
 
-              <div className="tooltip-cost">Skill Point Cost: {node.tier <= 3 ? 1 : node.tier === 4 ? 2 : 3}</div>
+              <div className="tooltip-cost">Skill Point Cost: {getSkillPointCost(node.tier)}</div>
 
               <div className="tooltip-desc">{descNodes}</div>
 

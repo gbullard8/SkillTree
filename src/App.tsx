@@ -9,6 +9,7 @@ function App() {
           src="/talentbackground/SRLogo.png"
           alt="Stolen Realm"
           className="logo"
+          draggable={false}
         />
         <TalentTree />
       </div>
@@ -17,5 +18,4 @@ function App() {
 }
 
 export default App;
-
 

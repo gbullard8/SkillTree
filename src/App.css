@@ -22,4 +22,7 @@
   height: auto;
   margin-top: .1vh;
   margin-bottom: -.1vh;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
 }

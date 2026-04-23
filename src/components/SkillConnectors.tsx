@@ -1,54 +1,56 @@
-import { useEffect, useState } from 'react';
 import { SkillNode } from '../models/SkillNode';
+import { getNodeCenterX, getNodeTop, TREE_CANVAS_HEIGHT, TREE_CANVAS_WIDTH, TREE_NODE_SIZE } from '../utils/treeCanvasLayout';
 
 type Props = {
   nodes: SkillNode[];
 };
 
 const SkillConnectors = ({ nodes }: Props) => {
-  const [, forceUpdate] = useState(0);
-
-  useEffect(() => {
-    const onResize = () => forceUpdate(n => n + 1);
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
-
-  const vw = window.innerWidth / 100;
-  const vh = window.innerHeight / 100;
-  const nodeWidth = 4.2 * vw; // matches .skill-node width: 4.2vw, aspect-ratio 1/1
+  const nodeWidth = TREE_NODE_SIZE;
 
   const getNodePos = (node: SkillNode) => {
-    const left = (node.xVal / 1920) * 10000 * vw;
-    const top = (node.tier / 1080) * 12000 * vh + 10 * vh; // +10vh matches margin-top on .skill-node
+    const centerX = getNodeCenterX(node, nodes);
+    const top = getNodeTop(node);
+    const connectorInset = nodeWidth * 0.18;
+
     return {
-      topCenterX: left + nodeWidth / 2,
-      topCenterY: top,
-      botCenterX: left + nodeWidth / 2,
-      botCenterY: top + nodeWidth,
+      topCenterX: centerX,
+      topCenterY: top + connectorInset,
+      botCenterX: centerX,
+      botCenterY: top + nodeWidth - connectorInset,
     };
   };
 
-  const nodeMap = new Map(nodes.map(n => [n.id, n]));
+  const nodeMap = new Map(nodes.map((node) => [node.id, node]));
+  const childrenByParent = new Map<string, SkillNode[]>();
 
-  const lines = nodes
-    .filter(n => n.requires && nodeMap.has(n.requires))
-    .map(n => {
-      const from = getNodePos(n);
-      const to = getNodePos(nodeMap.get(n.requires!)!);
-      return {
-        key: n.id,
-        x1: from.topCenterX, y1: from.topCenterY,
-        x2: to.botCenterX,   y2: to.botCenterY,
-      };
-    });
+  for (const node of nodes) {
+    if (!node.requires || !nodeMap.has(node.requires)) continue;
+    const siblings = childrenByParent.get(node.requires) ?? [];
+    siblings.push(node);
+    childrenByParent.set(node.requires, siblings);
+  }
+
+  const paths = Array.from(childrenByParent.entries()).flatMap(([parentId, children]) => {
+    const parent = nodeMap.get(parentId);
+    if (!parent) return [];
+
+    const parentPos = getNodePos(parent);
+    const sortedChildren = [...children].sort((a, b) => a.xVal - b.xVal);
+    const childPositions = sortedChildren.map(getNodePos);
+
+    return childPositions.map((childPos, index) => ({
+      key: `${parentId}-${sortedChildren[index].id}`,
+      d: `M ${parentPos.botCenterX} ${parentPos.botCenterY} L ${childPos.topCenterX} ${childPos.topCenterY}`,
+    }));
+  });
 
   return (
     <svg
+      viewBox={`0 0 ${TREE_CANVAS_WIDTH} ${TREE_CANVAS_HEIGHT}`}
       style={{
         position: 'absolute',
-        top: 0,
-        left: 0,
+        inset: 0,
         width: '100%',
         height: '100%',
         pointerEvents: 'none',
@@ -56,13 +58,26 @@ const SkillConnectors = ({ nodes }: Props) => {
         zIndex: 0,
       }}
     >
-      {lines.map(({ key, x1, y1, x2, y2 }) => (
-        <line
+      {paths.map(({ key, d }) => (
+        <path
           key={key}
-          x1={x1} y1={y1}
-          x2={x2} y2={y2}
-          stroke="#c8b48a"
+          d={d}
+          fill="none"
+          stroke="#3c2f22"
+          strokeWidth={6}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      ))}
+      {paths.map(({ key, d }) => (
+        <path
+          key={`${key}-highlight`}
+          d={d}
+          fill="none"
+          stroke="#d6c6ad"
           strokeWidth={3}
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       ))}
     </svg>

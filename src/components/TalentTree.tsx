@@ -1,14 +1,17 @@
 // src/components/TalentTree.tsx
 
-import { useMemo, useEffect, useState } from 'react';
+import { useMemo, useEffect, useRef, useState } from 'react';
 import { useTalentTree } from '../context/TalentTreeContext';
 import { loadSkillTrees } from '../services/LoadSkillTrees';
 import SkillNodeComponent from './SkillNode';
 import SkillConnectors from './SkillConnectors';
 import TabSelector from './TabSelector';
 import LevelSelector from './LevelSelector';
-import ComparePanel from './ComparePanel';
+import { TREE_CANVAS_HEIGHT, TREE_CANVAS_WIDTH, TREE_FIT_HEIGHT, TREE_FIT_WIDTH } from '../utils/treeCanvasLayout';
 import './TalentTree.css';
+
+const preloadedImages = new Map<string, HTMLImageElement>();
+let preloadStarted = false;
 
 const tabs = [
   'Fire',
@@ -24,88 +27,136 @@ const tabs = [
   'Chaos',
 ];
 
+const tabImages: Record<string, string> = {
+  Fire: '/icons/aura_of_flame.png',
+  Lightning: '/icons/enchant_lightning.png',
+  Cold: '/icons/mass_freeze.png',
+  Warrior: '/icons/colossus.png',
+  Light: '/icons/mass_cure.png',
+  Ranger: '/icons/tabs/Ranger.PNG',
+  Shadow: '/icons/soul_exchange.png',
+  Thief: '/icons/poison_weapon.png',
+  Monk: '/icons/meditation.png',
+  Nature: '/icons/mass_entangle.png',
+  Chaos: '/icons/perturb.png',
+};
+
+const preloadImage = (src: string) => {
+  if (preloadedImages.has(src)) return;
+
+  const img = new Image();
+  img.decoding = 'async';
+  img.src = src;
+  preloadedImages.set(src, img);
+
+  if (img.complete) {
+    void img.decode?.().catch(() => undefined);
+    return;
+  }
+
+  img.onload = () => {
+    void img.decode?.().catch(() => undefined);
+  };
+};
+
 const TalentTree = () => {
   const { selectedTab, selectTab, totalPointsSpent, availablePoints, treeStates } = useTalentTree();
-  const [compareMode, setCompareMode] = useState(false);
+  const [canvasScale, setCanvasScale] = useState(1);
+  const viewportRef = useRef<HTMLDivElement>(null);
 
-  // 🔹 Load ALL trees once
   const trees = useMemo(() => loadSkillTrees(), []);
 
-  // 🔹 Preload all skill icons on mount so tab switches are instant
   useEffect(() => {
+    if (preloadStarted) return;
+    preloadStarted = true;
+
     for (const tree of Object.values(trees)) {
       for (const node of tree.nodes) {
-        const img = new Image();
-        img.src = `/icons/${node.skill.id}.png`;
+        preloadImage(`/icons/${node.skill.id}.png`);
       }
+    }
+
+    for (const src of Object.values(tabImages)) {
+      preloadImage(src);
     }
   }, [trees]);
 
-  // 🔹 Select the active tree
-  const skillTree = trees[selectedTab];
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
 
-  // 🔹 Compute shift so the gap between active and passive areas is centered
-  const centerShift = useMemo(() => {
-    if (!skillTree) return 0;
-    const K = 10000 / 1920; // vw per xVal unit
-    const nodeWidthVW = 4.2;
-    const active = skillTree.nodes.filter(n => !n.isPassive);
-    const passive = skillTree.nodes.filter(n => n.isPassive);
-    if (!active.length || !passive.length) return 0;
-    const maxActiveRightVW = Math.max(...active.map(n => n.xVal * K)) + nodeWidthVW;
-    const minPassiveLeftVW = Math.min(...passive.map(n => n.xVal * K));
-    return (maxActiveRightVW + minPassiveLeftVW) / 2;
-  }, [skillTree]);
+    const updateScale = () => {
+      const widthScale = viewport.clientWidth / TREE_FIT_WIDTH;
+      const heightScale = viewport.clientHeight / TREE_FIT_HEIGHT;
+      setCanvasScale(Math.min(widthScale, heightScale));
+    };
+
+    updateScale();
+
+    const observer = new ResizeObserver(updateScale);
+    observer.observe(viewport);
+
+    return () => observer.disconnect();
+  }, [TREE_FIT_WIDTH, TREE_FIT_HEIGHT]);
+
+  const skillTree = trees[selectedTab];
+  const tabPointCounts = useMemo(
+    () =>
+      Object.fromEntries(
+        tabs.map((tab) => [tab, treeStates[tab]?.pointsSpent ?? 0])
+      ) as Record<string, number>,
+    [treeStates]
+  );
 
   if (!skillTree) {
     return <p>Unknown talent tree: {selectedTab}</p>;
   }
 
   return (
-
     <div className="talent-tree-container">
       <div className="talent-tree-topbar">
-        <div className="topbar-title">Talent Calculator</div>
+        <div className="topbar-title">Skill Tree Calculator</div>
         <div className="points-spent">
           <LevelSelector />
-          <span>Points Remaining: {availablePoints - totalPointsSpent}</span>
         </div>
       </div>
-
 
       <div className="tab-header-container">
-        <TabSelector tabs={tabs} selected={selectedTab} onSelect={selectTab} />
-        <button
-          className="compare-toggle-btn"
-          onClick={() => setCompareMode(m => !m)}
-        >
-          {compareMode ? 'Hide Compare' : 'Compare Mode'}
-        </button>
-        </div>
-
-
-        <div className="talent-tree-body">
-          <div className="skill-tree-grid" style={{ transform: `translateX(calc(50% - ${centerShift}vw))` }}>
-          <SkillConnectors nodes={skillTree.nodes} />
-          {skillTree.nodes.map((node) => (
-            <SkillNodeComponent key={node.id} node={node} allNodes={skillTree.nodes} />
-          ))}
-        </div>
+        <TabSelector tabs={tabs} selected={selectedTab} onSelect={selectTab} pointCounts={tabPointCounts} />
       </div>
 
+      <div className={`points-remaining-banner ${availablePoints - totalPointsSpent === 0 ? 'points-remaining-empty' : ''}`}>
+        <span>Points Remaining: {availablePoints - totalPointsSpent}</span>
+      </div>
 
+      <div className="active-passive-banner" aria-hidden="true">
+        <span className="active-passive-label active-label">
+          <span className="active-passive-label-text">Active Skills</span>
+        </span>
+        <span className="active-passive-label passive-label">
+          <span className="active-passive-label-text">Passive Skills</span>
+        </span>
+      </div>
 
-      {compareMode && (
-        <ComparePanel
-          nodes={skillTree.nodes}
-          treeState={treeStates[selectedTab]}
-          onClose={() => setCompareMode(false)}
-        />
-      )}
+      <div className="talent-tree-body">
+        <div ref={viewportRef} className="skill-tree-viewport">
+          <div
+            className="skill-tree-grid"
+            style={{
+              width: `${TREE_CANVAS_WIDTH}px`,
+              height: `${TREE_CANVAS_HEIGHT}px`,
+              transform: `translateX(-50%) scale(${canvasScale})`,
+            }}
+          >
+            <SkillConnectors nodes={skillTree.nodes} />
+            {skillTree.nodes.map((node) => (
+              <SkillNodeComponent key={node.id} node={node} allNodes={skillTree.nodes} />
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default TalentTree;
-
-

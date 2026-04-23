@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import { SkillNode } from '../models/SkillNode';
 import { EQUIPMENT_TYPE_NAMES } from '../models/Action';
 import { useTalentTree } from '../context/TalentTreeContext';
-import { canUnlock, canDeallocate, TIER_REQUIREMENTS } from '../utils/CanUnlock';
+import { canUnlock, canDeallocate, getBlockingSibling, TIER_REQUIREMENTS, getSkillPointCost } from '../utils/CanUnlock';
 import { parseDescription } from '../utils/parseDescription';
 import { applyDamageRange } from '../utils/computeDamageRange';
 import { STATUS_EFFECTS } from '../data/statusEffects';
 import { SPECIAL_DURATION_SKILLS, SPECIAL_BLAST_RADIUS_SKILLS, SPECIAL_RANGE_SKILLS, DURATION_OVERRIDE, AP_COST_OVERRIDE } from '../data/specialValues';
+import { getNodeLeft, getNodeTop } from '../utils/treeCanvasLayout';
 import './SkillNode.css';
 
 
@@ -29,10 +30,10 @@ const SkillNodeComponent = ({ node, allNodes }: Props) => {
   const handleClick = () => {
     if (isUnlocked) {
       if (treeState && canDeallocate(node, allNodes, treeState)) {
-        deallocatePoint(node.id);
+        deallocatePoint(node.id, node.tier);
       }
     } else if (isAvailable) {
-      allocatePoint(node.id);
+      allocatePoint(node.id, node.tier);
     }
   };
 
@@ -61,6 +62,7 @@ const SkillNodeComponent = ({ node, allNodes }: Props) => {
   const parentName = parentNode?.skill.skillName ?? null;
 
   const allocations = treeState?.allocations ?? {};
+  const blockingSibling = getBlockingSibling(node, allNodes, allocations);
   const tierRequired = TIER_REQUIREMENTS[node.tier] ?? 0;
   const pointsInLowerTiers = allNodes
     .filter(n => n.tier < node.tier)
@@ -89,19 +91,22 @@ const SkillNodeComponent = ({ node, allNodes }: Props) => {
       }}
     >
       <div className="tooltip-header">
-        <img className="tooltip-icon" src={`/icons/${node.skill.id}.png`} alt="" />
+        <img className="tooltip-icon" src={`/icons/${node.skill.id}.png`} alt=""
+          onError={(e) => { if (node.requires) (e.target as HTMLImageElement).src = `/icons/${node.requires}.png`; }} />
         <div className="tooltip-title">{node.skill.skillName}</div>
       </div>
       <div className="tooltip-divider" />
 
       {isAvailable ? (
         <div className="tooltip-select-to-learn-text">{isUnlocked ? 'Select to Unlearn' : 'Select to Learn'}</div>
+      ) : blockingSibling ? (
+        <div className="tooltip-requires-more-points">Disabled by {blockingSibling.skill.skillName}</div>
       ) : !tierMet ? (
         <div className="tooltip-requires-more-points">Requires {tierRequired} points in previous tiers</div>
       ) : !parentMet ? (
         <div className="tooltip-requires-more-points">Requires {parentName}</div>
       ) : null}
-      <div className="tooltip-cost">Skill Point Cost: {node.tier <= 3 ? 1 : node.tier === 4 ? 2 : 3}</div>
+      <div className="tooltip-cost">Skill Point Cost: {getSkillPointCost(node.tier)}</div>
 
       <div className="tooltip-desc">{descNodes}</div>
 
@@ -175,22 +180,25 @@ const SkillNodeComponent = ({ node, allNodes }: Props) => {
     <div
       ref={nodeRef}
       className={nodeClass}
+      onMouseDown={(e) => e.preventDefault()}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
-        left: `${(node.xVal / 1920) * 10000}vw`,
-        top: `${(node.tier / 1080) * 12000}vh`,
+        left: `${getNodeLeft(node, allNodes)}px`,
+        top: `${getNodeTop(node)}px`,
         position: 'absolute',
       }}
     >
       <div className="skill-node-inner">
-        <img className='skill-icon'
-          src={`/icons/${node.skill.id}.png`}
-          alt={`${node.skill.id}  (${node.skill.skillName})`}
-          draggable={false}
-        />
-        {allocatedPoints > 0 && <span className="points">{allocatedPoints}</span>}
+        <span className="skill-icon-art" aria-hidden="true">
+          <img className='skill-icon'
+            src={`/icons/${node.skill.id}.png`}
+            alt={`${node.skill.id}  (${node.skill.skillName})`}
+            draggable={false}
+            onError={(e) => { if (node.requires) (e.target as HTMLImageElement).src = `/icons/${node.requires}.png`; }}
+          />
+        </span>
       </div>
       {tooltip}
     </div>

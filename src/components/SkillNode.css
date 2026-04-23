@@ -1,14 +1,15 @@
-
   
   .skill-node {
     position: relative;
-    width: 3.5vw;
+    width: 64px;
     aspect-ratio: 1 / 1;
     background-image: url('/public/talentbackground/mp2_frame_sliced.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    margin-top: 10vh;
+    margin-top: 0;
+    user-select: none;
+    -webkit-user-select: none;
   }
 
   .skill-node-inner {
@@ -18,20 +19,88 @@
   align-items: center;
   justify-content: center;
 }
+
+ .skill-icon-art {
+  position: relative;
+  display: flex;
+  width: 98%;
+}
+
+  .skill-icon-art::before {
+  content: "";
+  position: absolute;
+  inset: -2%;
+  background-image: url('/public/icons/tabs/tgb_avatar_overlay icon shadow overlay.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.72;
+}
+
+  .skill-icon-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('/public/icons/tabs/inset_square_highlight.svg');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 2;
+}
   
 
  .skill-icon {
   width: 100%;
-  height: 100%;
   object-fit: contain;
   pointer-events: none;
-  /* filter: grayscale(100%); */
-  /* transition: filter 0.15s ease; */
+  -webkit-user-drag: none;
+  filter: grayscale(100%);
+  transition: filter 0.15s ease;
 }
 
-/* .skill-node.allocated .skill-icon {
+.skill-node.allocated .skill-icon {
   filter: none;
-} */
+}
+
+.skill-node.locked .skill-icon {
+  filter: grayscale(100%) brightness(0.72) contrast(0.78) saturate(0);
+}
+
+.skill-node.locked .skill-icon-art::before {
+  opacity: 0.62;
+}
+
+.skill-node.locked .skill-icon-art::after {
+  opacity: 0.2;
+}
+
+.skill-node.locked .skill-node-inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(70, 70, 70, 0.18);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.skill-node.locked .skill-node-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 34%;
+  aspect-ratio: 1 / 1;
+  background-image: url('/public/icons/tabs/icons8-lock-90.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0.82;
+}
 
 .points {
   position: absolute;
@@ -49,10 +118,7 @@
   .skill-node.allocated::after {
   content: "";
   position: absolute;
-  top: -.4vh;
-  left: -.2vw;
-  width: calc(100% + .4vw);
-  height: calc(100% + .8vh);
+  inset: -2px;
   background-image: url('/public/talentbackground/mp2_frame sliced_white_bright_border.png');
   background-size: 100% 100%;
   background-position: center;
@@ -63,19 +129,7 @@
 }
 
   
-  /* State: locked */
-  .skill-node.locked {
-    background-color: #222;
-    color: #555;
-    border-color: #333;
-    cursor: pointer;
-  }
-  
-  .skill-node.locked:hover {
-    transform: scale(1.05);
-    border-color: gold;
-    color: #aaa;
-  }
+
   
   /* Tooltip container — rendered via React Portal at document.body */
   .skill-tooltip {

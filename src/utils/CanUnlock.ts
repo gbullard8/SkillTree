@@ -13,18 +13,39 @@ export const TIER_REQUIREMENTS: Record<number, number> = {
   5: 10,
 };
 
+export function getSkillPointCost(tier: number): number {
+  if (tier <= 3) return 1;
+  if (tier === 4) return 2;
+  return 3;
+}
+
 function lowerTierPoints(targetTier: number, allNodes: SkillNode[], allocations: Record<string, number>): number {
   return allNodes
     .filter(n => n.tier < targetTier)
-    .reduce((sum, n) => sum + (allocations[n.id] ?? 0), 0);
+    .reduce((sum, n) => sum + ((allocations[n.id] ?? 0) > 0 ? getSkillPointCost(n.tier) : 0), 0);
 }
+
+export const getBlockingSibling = (
+  node: SkillNode,
+  allNodes: SkillNode[],
+  allocations: Record<string, number>
+): SkillNode | null => {
+  if (!node.requires) return null;
+
+  return allNodes.find(other =>
+    other.id !== node.id &&
+    other.requires === node.requires &&
+    (allocations[other.id] ?? 0) > 0
+  ) ?? null;
+};
 
 export const canUnlock = (node: SkillNode, allNodes: SkillNode[], state: TreeState | undefined): boolean => {
   const allocations = state?.allocations ?? {};
   const depsMet = !node.requires || (allocations[node.requires] ?? 0) > 0;
   const required = node.tier == null ? 0 : (TIER_REQUIREMENTS[node.tier] ?? 0);
   const tierOk = lowerTierPoints(node.tier, allNodes, allocations) >= required;
-  return depsMet && tierOk;
+  const siblingBlocked = getBlockingSibling(node, allNodes, allocations) !== null;
+  return depsMet && tierOk && !siblingBlocked;
 };
 
 export const canDeallocate = (node: SkillNode, allNodes: SkillNode[], state: TreeState): boolean => {

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import { getSkillPointCost } from '../utils/CanUnlock';
 
 export type TreeState = {
   pointsSpent: number;
@@ -9,8 +10,8 @@ type TalentTreeContextType = {
   treeStates: Record<string, TreeState>;
   selectedTab: string;
   selectTab: (tab: string) => void;
-  allocatePoint: (skillId: string) => void;
-  deallocatePoint: (skillId: string) => void;
+  allocatePoint: (skillId: string, tier: number) => void;
+  deallocatePoint: (skillId: string, tier: number) => void;
   totalPointsSpent: number;
   level: number;
   setLevel: (level: number) => void;
@@ -33,22 +34,30 @@ export const TalentTreeProvider = ({ children }: { children: React.ReactNode }) 
   const availablePoints = level + 2;
 
   const setLevel = (newLevel: number) => {
-    setLevelState(newLevel);
+    const clampedLevel = Math.max(1, Math.min(30, newLevel));
+    setLevelState(clampedLevel);
   };
 
   const selectTab = (tab: string) => {
     setSelectedTab(tab);
   };
 
-  const allocatePoint = (skillId: string) => {
+  const allocatePoint = (skillId: string, tier: number) => {
     setTreeStates((prev) => {
+      const totalSpentBefore = Object.values(prev).reduce(
+        (sum, tree) => sum + (tree?.pointsSpent ?? 0),
+        0
+      );
       const currentTree = prev[selectedTab] || { pointsSpent: 0, allocations: {} };
       const currentPoints = currentTree.allocations[skillId] || 0;
+      const pointCost = getSkillPointCost(tier);
+      const maxPoints = level + 2;
+      if (totalSpentBefore + pointCost > maxPoints) return prev;
 
       return {
         ...prev,
         [selectedTab]: {
-          pointsSpent: currentTree.pointsSpent + 1,
+          pointsSpent: currentTree.pointsSpent + pointCost,
           allocations: {
             ...currentTree.allocations,
             [skillId]: currentPoints + 1,
@@ -58,10 +67,11 @@ export const TalentTreeProvider = ({ children }: { children: React.ReactNode }) 
     });
   };
 
-  const deallocatePoint = (skillId: string) => {
+  const deallocatePoint = (skillId: string, tier: number) => {
     setTreeStates((prev) => {
       const currentTree = prev[selectedTab];
       if (!currentTree || !currentTree.allocations[skillId]) return prev;
+      const pointCost = getSkillPointCost(tier);
 
       const updatedAllocations = { ...currentTree.allocations };
       updatedAllocations[skillId] = updatedAllocations[skillId] - 1;
@@ -70,7 +80,7 @@ export const TalentTreeProvider = ({ children }: { children: React.ReactNode }) 
       return {
         ...prev,
         [selectedTab]: {
-          pointsSpent: currentTree.pointsSpent - 1,
+          pointsSpent: currentTree.pointsSpent - pointCost,
           allocations: updatedAllocations,
         },
       };
