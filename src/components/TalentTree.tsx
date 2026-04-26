@@ -1,13 +1,13 @@
 // src/components/TalentTree.tsx
 
-import { useMemo, useEffect, useRef, useState } from 'react';
+import { type CSSProperties, useMemo, useEffect, useRef, useState } from 'react';
 import { useTalentTree } from '../context/TalentTreeContext';
 import { loadSkillTrees } from '../services/LoadSkillTrees';
 import SkillNodeComponent from './SkillNode';
 import SkillConnectors from './SkillConnectors';
 import TabSelector from './TabSelector';
 import LevelSelector from './LevelSelector';
-import { TREE_CANVAS_HEIGHT, TREE_CANVAS_WIDTH, TREE_FIT_HEIGHT, TREE_FIT_WIDTH } from '../utils/treeCanvasLayout';
+import { TREE_CANVAS_HEIGHT, TREE_CANVAS_WIDTH } from '../utils/treeCanvasLayout';
 import './TalentTree.css';
 
 const preloadedImages = new Map<string, HTMLImageElement>();
@@ -41,6 +41,9 @@ const tabImages: Record<string, string> = {
   Chaos: '/icons/perturb.png',
 };
 
+const DESIGNED_TREE_WIDTH = 1613;
+const SKILL_GRID_BASE_SCALE = 1.32;
+
 const preloadImage = (src: string) => {
   if (preloadedImages.has(src)) return;
 
@@ -61,8 +64,8 @@ const preloadImage = (src: string) => {
 
 const TalentTree = () => {
   const { selectedTab, selectTab, totalPointsSpent, availablePoints, treeStates } = useTalentTree();
-  const [canvasScale, setCanvasScale] = useState(1);
-  const viewportRef = useRef<HTMLDivElement>(null);
+  const [treeScale, setTreeScale] = useState(1);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const trees = useMemo(() => loadSkillTrees(), []);
 
@@ -82,22 +85,20 @@ const TalentTree = () => {
   }, [trees]);
 
   useEffect(() => {
-    const viewport = viewportRef.current;
-    if (!viewport) return;
+    const container = containerRef.current;
+    if (!container) return;
 
     const updateScale = () => {
-      const widthScale = viewport.clientWidth / TREE_FIT_WIDTH;
-      const heightScale = viewport.clientHeight / TREE_FIT_HEIGHT;
-      setCanvasScale(Math.min(widthScale, heightScale));
+      setTreeScale(container.clientWidth / DESIGNED_TREE_WIDTH);
     };
 
     updateScale();
 
     const observer = new ResizeObserver(updateScale);
-    observer.observe(viewport);
+    observer.observe(container);
 
     return () => observer.disconnect();
-  }, [TREE_FIT_WIDTH, TREE_FIT_HEIGHT]);
+  }, []);
 
   const skillTree = trees[selectedTab];
   const tabPointCounts = useMemo(
@@ -113,7 +114,11 @@ const TalentTree = () => {
   }
 
   return (
-    <div className="talent-tree-container">
+    <div
+      ref={containerRef}
+      className="talent-tree-container"
+      style={{ '--talent-scale': treeScale } as CSSProperties}
+    >
       <div className="talent-tree-topbar">
         <div className="topbar-title">Skill Tree Calculator</div>
         <div className="points-spent">
@@ -139,13 +144,13 @@ const TalentTree = () => {
       </div>
 
       <div className="talent-tree-body">
-        <div ref={viewportRef} className="skill-tree-viewport">
+        <div className="skill-tree-viewport">
           <div
             className="skill-tree-grid"
             style={{
               width: `${TREE_CANVAS_WIDTH}px`,
               height: `${TREE_CANVAS_HEIGHT}px`,
-              transform: `translateX(-50%) scale(${canvasScale})`,
+              transform: `translateX(-50%) scale(${treeScale * SKILL_GRID_BASE_SCALE})`,
             }}
           >
             <SkillConnectors nodes={skillTree.nodes} />

@@ -8,7 +8,7 @@
 .level-selector {
   display: flex;
   align-items: center;
-  gap: clamp(6px, 0.8vw, 14px);
+  gap: calc(14px * var(--talent-scale));
 }
 
 .level-btn {
@@ -16,9 +16,9 @@
   background: none;
   border: 1px solid #a08060;
   color: #e8d8b0;
-  font-size: clamp(16px, 1.6vw, 26px);
-  width: clamp(24px, 2vw, 36px);
-  height: clamp(24px, 2vw, 36px);
+  font-size: calc(26px * var(--talent-scale));
+  width: calc(36px * var(--talent-scale));
+  height: calc(36px * var(--talent-scale));
   cursor: pointer;
   border-radius: 4px;
   line-height: 1;
@@ -53,13 +53,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: clamp(40px, 3.5vw, 60px);
+  min-width: calc(60px * var(--talent-scale));
   user-select: none;
   -webkit-user-select: none;
 }
 
 .level-label {
-  font-size: clamp(9px, 0.8vw, 13px);
+  font-size: calc(13px * var(--talent-scale));
   color: #a89060;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -67,7 +67,7 @@
 }
 
 .level-number {
-  font-size: clamp(18px, 2vw, 30px);
+  font-size: calc(30px * var(--talent-scale));
   color: #f0e0a0;
   font-weight: bold;
   line-height: 1.1;
@@ -78,8 +78,8 @@
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  margin-bottom: 4px;
-  font-size: clamp(10px, 0.9vw, 14px);
+  margin-bottom: calc(4px * var(--talent-scale));
+  font-size: calc(14px * var(--talent-scale));
   color: #e05050;
   text-align: center;
   white-space: nowrap;

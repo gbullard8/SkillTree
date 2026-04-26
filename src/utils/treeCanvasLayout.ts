@@ -9,7 +9,7 @@ export const TREE_CENTER_X = TREE_CANVAS_WIDTH / 2;
 export const TREE_CENTER_XVAL = 5.75;
 export const TREE_X_STEP = 88;
 export const TREE_TOP_OFFSET = -70;
-export const TREE_TIER_STEP = 75;
+export const TREE_TIER_STEP = 84;
 
 const getBaseNodeCenterX = (node: SkillNode) =>
   TREE_CENTER_X + (node.xVal - TREE_CENTER_XVAL) * TREE_X_STEP;
