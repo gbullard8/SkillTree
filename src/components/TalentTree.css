@@ -2,7 +2,7 @@
   --talent-tree-ratio: 1.70;
   --talent-scale: 1;
   position: relative;
-  width: min(84vw, calc(88vh * var(--talent-tree-ratio)));
+  width: min(calc(var(--page-layout-width) * 0.84), calc(var(--page-layout-height) * 0.88 * var(--talent-tree-ratio)));
   height: auto;
   aspect-ratio: var(--talent-tree-ratio);
   margin: 0 auto;

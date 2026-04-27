@@ -1,6 +1,14 @@
 .App {
+  --desktop-min-width: 1280px;
+  --desktop-min-height: 720px;
+  --page-layout-width: max(100%, var(--desktop-min-width));
+  --page-layout-height: max(100vh, var(--desktop-min-height));
+  --logo-min-width: 192px;
+  --logo-max-width: 288px;
   text-align: center;
-  min-height: 100vh;
+  width: 100%;
+  min-width: var(--desktop-min-width);
+  min-height: var(--page-layout-height);
   background-image: url('/public/talentbackground/SRBackground.png');
   background-size: cover;
   background-position: center;
@@ -8,9 +16,9 @@
   background-attachment: fixed;
 }
 
-/* NEW wrapper for logo + tree */
 .content-wrapper {
   width: 100%;
+  min-width: var(--desktop-min-width);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -18,10 +26,10 @@
 }
 
 .logo {
-  width: 15vw;
+  width: clamp(var(--logo-min-width), calc(var(--page-layout-width) * 0.15), var(--logo-max-width));
   height: auto;
-  margin-top: .1vh;
-  margin-bottom: -.1vh;
+  margin-top: calc(var(--page-layout-height) * 0.001);
+  margin-bottom: calc(var(--page-layout-height) * -0.001);
   user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;

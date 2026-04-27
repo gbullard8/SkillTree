@@ -1537,7 +1537,7 @@
     {
       "Skill": {
         "SkillName": "Helping",
-        "Description": "Offer your chaotic assistance the target ally. Results may vary greatly...",
+        "Description": "Offer your chaotic assistance to the target ally. Results may vary greatly...",
         "SkillType": 12,
         "DamageType": 0,
         "SkillTags": [
@@ -1903,7 +1903,7 @@
             {
               "Name": "Sleep",
               "Infinite": false,
-              "Duration": "1",
+              "Duration": "2",
               "ExpireType": 0,
               "MaintainManaRatio": 1.0,
               "AuraRadius": 3,
@@ -1914,6 +1914,15 @@
               "Infinite": false,
               "Duration": "1",
               "ExpireType": 0,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Fizzled",
+              "Infinite": false,
+              "Duration": "1",
+              "ExpireType": 1,
               "MaintainManaRatio": 1.0,
               "AuraRadius": 3,
               "DamageEffects": []
@@ -1996,7 +2005,8 @@
           "SkillTags": [
             8,
             7,
-            5
+            5,
+            4
           ],
           "HasWeaponRequirement": false,
           "HasWeaponRequirementTypes": false,
@@ -2018,37 +2028,37 @@
           "SourceStatusEffects": [],
           "DamageEffects": [
             {
-              "RawExpression": "TargetStored[\"ColdDamage\"] = Source.GetRollResult(50) ? Source.SpellPower(\"Cold\") * 0.5f : 0",
+              "RawExpression": "TargetStored[\"ColdDamage\"] = Source.GetRollResult(50) ? Source.SpellPower(\"Cold\") * 0.4f : 0",
               "StatType": "None",
               "Coefficient": 0.0,
               "EffectType": "Other"
             },
             {
-              "RawExpression": "TargetStored[\"HolyDamage\"] = Source.GetRollResult(50) ? Source.SpellPower(\"Light\") * 0.5f : 0",
+              "RawExpression": "TargetStored[\"HolyDamage\"] = Source.GetRollResult(50) ? Source.SpellPower(\"Light\") * 0.4f : 0",
               "StatType": "None",
               "Coefficient": 0.0,
               "EffectType": "Other"
             },
             {
-              "RawExpression": "TargetStored[\"FireDamage\"] = Source.GetRollResult(50) ? Source.SpellPower(\"Fire\") * 0.5f : 0",
+              "RawExpression": "TargetStored[\"FireDamage\"] = Source.GetRollResult(50) ? Source.SpellPower(\"Fire\") * 0.4f : 0",
               "StatType": "None",
               "Coefficient": 0.0,
               "EffectType": "Other"
             },
             {
-              "RawExpression": "TargetStored[\"LightningDamage\"] = Source.GetRollResult(50) ? Source.SpellPower(\"Lightning\") * 0.5f : 0",
+              "RawExpression": "TargetStored[\"LightningDamage\"] = Source.GetRollResult(50) ? Source.SpellPower(\"Lightning\") * 0.4f : 0",
               "StatType": "None",
               "Coefficient": 0.0,
               "EffectType": "Other"
             },
             {
-              "RawExpression": "TargetStored[\"PhysicalDamage\"] = Source.GetRollResult(50) ? Source.SpellPower(\"Physical\") * 0.5f : 0",
+              "RawExpression": "TargetStored[\"PhysicalDamage\"] = Source.GetRollResult(50) ? Source.SpellPower(\"Physical\") * 0.4f : 0",
               "StatType": "None",
               "Coefficient": 0.0,
               "EffectType": "Other"
             },
             {
-              "RawExpression": "TargetStored[\"ShadowDamage\"] = Source.GetRollResult(50) ? Source.SpellPower(\"Shadow\") * 0.5f : 0",
+              "RawExpression": "TargetStored[\"ShadowDamage\"] = Source.GetRollResult(50) ? Source.SpellPower(\"Shadow\") * 0.4f : 0",
               "StatType": "None",
               "Coefficient": 0.0,
               "EffectType": "Other"
@@ -2155,7 +2165,7 @@
     {
       "Skill": {
         "SkillName": "Omnism II",
-        "Description": "Increases the effectiveness of shrines by 12%.",
+        "Description": "Increases the effectiveness of shrines by an additional 12%.",
         "SkillType": 12,
         "DamageType": 0,
         "SkillTags": [],
@@ -2215,7 +2225,7 @@
     {
       "Skill": {
         "SkillName": "Displacement",
-        "Description": "Teleport randomly when taking damage 1 turn cd.",
+        "Description": "Teleport randomly when taking damage.",
         "SkillType": 12,
         "DamageType": 0,
         "SkillTags": [],
@@ -2368,7 +2378,7 @@
     {
       "Skill": {
         "SkillName": "Disperse",
-        "Description": "Teleports all enemies within 3 hexes of you to any random hex at least 6 hexes from you. Applies a 1 turn slow.",
+        "Description": "Teleports all enemies within 3 hexes of you to any random hex 4 to 8 hexes from you. Applies a 1 turn slow.",
         "SkillType": 12,
         "DamageType": 9,
         "SkillTags": [
@@ -2713,7 +2723,7 @@
           "UseSimpleTargetingBlast": true,
           "SimpleBlastRange": 100,
           "BlastRange": "",
-          "TargetGlobal": false,
+          "TargetGlobal": true,
           "RangeSelection": null,
           "UseGroundEffect": false,
           "GroundDuration": "",
@@ -2883,16 +2893,16 @@
           "UseCondition": "",
           "UseConditionFailText": "",
           "CostsMana": true,
-          "ManaCost": 23,
+          "ManaCost": 19,
           "Cooldown": "0",
-          "HasCharges": false,
-          "MaxCharges": "",
-          "InitialCharges": "",
+          "HasCharges": true,
+          "MaxCharges": "3",
+          "InitialCharges": "3",
           "ChargesPerBattle": "",
           "StartingBattleCharges": "",
           "RestoreAllChargesOnTownReturn": false,
           "Cost": 0,
-          "ManaCostRatio": 2.5,
+          "ManaCostRatio": 2.0,
           "AddWeaponCost": false,
           "NumCasts": "",
           "UseGlobalDamageRange": true,
@@ -3156,7 +3166,7 @@
           "UseSimpleTargetingBlast": true,
           "SimpleBlastRange": 100,
           "BlastRange": "",
-          "TargetGlobal": false,
+          "TargetGlobal": true,
           "RangeSelection": null,
           "UseGroundEffect": false,
           "GroundDuration": "",
@@ -3633,7 +3643,7 @@
     {
       "Skill": {
         "SkillName": "Replicate",
-        "Description": "Creates a clone of yourself that can cast your abilities and has your passives. The Replicate Clone explodes for damage on death, each element has a @50%@ chance to deal *0 damage.",
+        "Description": "Creates a clone of yourself that can cast your abilities. The Replicate Clone explodes for damage on death, each element has a @50%@ chance to deal *0 damage.",
         "SkillType": 12,
         "DamageType": 0,
         "SkillTags": [
@@ -3727,7 +3737,7 @@
     {
       "Skill": {
         "SkillName": "Reverberate",
-        "Description": "When take any @Action@ you have a 20% chance explode in chaos dealing a random type of damage or healing.",
+        "Description": "When you take a @Free Action@ or @Action@ you have a 33% chance explode in chaos dealing all types of damage and healing.",
         "SkillType": 12,
         "DamageType": 0,
         "SkillTags": [],
@@ -3763,6 +3773,329 @@
         "IsPassive": true
       },
       "Actions": []
+    },
+    {
+      "Skill": {
+        "SkillName": "Coin of Chaos",
+        "Description": "Flip the Coin of Chaos!",
+        "SkillType": 6,
+        "DamageType": 0,
+        "SkillTags": [
+          4
+        ],
+        "TooltipDamageInfoRefAction": null,
+        "Level": 0,
+        "Tier": 5,
+        "Dependency": null,
+        "xVal": 4.0,
+        "iconName": "17",
+        "PassiveStatusData": [],
+        "DontIncludeInTree": true,
+        "ForceShowGlobalStatusDesc": false,
+        "IsPassive": false
+      },
+      "Actions": [
+        {
+          "name": "Coin Flip",
+          "OverrideDescriptionAndName": false,
+          "Description": "",
+          "DescriptionExpressions": [],
+          "DamageExpressionOverrides": [],
+          "IgnoreSourceStatus": false,
+          "SkipTextAndAnimation": false,
+          "OverrideActionName": false,
+          "ActionNameOverride": "",
+          "OverrideSkillType": false,
+          "OverrideDamageStatType": false,
+          "UseActionChances": false,
+          "TargetTextOverride": "",
+          "UseMaxRangeOverride": false,
+          "MaxRangeOverride": 0,
+          "UseMaxRangeBlastOverride": false,
+          "MaxRangeBlastOverride": 0,
+          "UseKnockback": false,
+          "KnockbackAmount": 1,
+          "UseMultipleHits": false,
+          "NumHits": 1,
+          "MultipleHitRange": "1",
+          "UseNumHitsEquation": false,
+          "NumHitsEquation": "",
+          "HitInterval": 0.5,
+          "MultipleHitTarget": "Cell == Target.Cell",
+          "MultipleHitTargetOrderBy": "",
+          "MultipleHitTargetRandomize": false,
+          "UseCondition": "",
+          "UseConditionFailText": "",
+          "CostsMana": true,
+          "ManaCost": 13,
+          "Cooldown": "0",
+          "HasCharges": true,
+          "MaxCharges": "4",
+          "InitialCharges": "4",
+          "ChargesPerBattle": "",
+          "StartingBattleCharges": "",
+          "RestoreAllChargesOnTownReturn": false,
+          "Cost": 0,
+          "ManaCostRatio": 1.4,
+          "AddWeaponCost": false,
+          "NumCasts": "",
+          "UseGlobalDamageRange": true,
+          "SkillTags": [
+            7,
+            4,
+            6
+          ],
+          "HasWeaponRequirement": false,
+          "HasWeaponRequirementTypes": false,
+          "HasWeaponRequirementTags": false,
+          "RequiredWeaponTags": [],
+          "RequiredWeaponTypes": [],
+          "UseSimpleTargetingRange": true,
+          "SimpleRange": 6,
+          "UseSimpleTargetingBlast": false,
+          "SimpleBlastRange": 0,
+          "BlastRange": null,
+          "TargetGlobal": false,
+          "RangeSelection": "",
+          "UseGroundEffect": false,
+          "GroundDuration": "",
+          "GroundIsInfinite": false,
+          "Deactivatable": false,
+          "StatusEffects": [
+            {
+              "Name": "Shapeshift: Box",
+              "Infinite": false,
+              "Duration": "1",
+              "ExpireType": 0,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Blind",
+              "Infinite": false,
+              "Duration": "1",
+              "ExpireType": 0,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Greater Damage",
+              "Infinite": false,
+              "Duration": "0",
+              "ExpireType": 1,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Damage",
+              "Infinite": false,
+              "Duration": "0",
+              "ExpireType": 1,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Lesser Damage",
+              "Infinite": false,
+              "Duration": "0",
+              "ExpireType": 1,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Damage Reduced by 50%",
+              "Infinite": false,
+              "Duration": "2",
+              "ExpireType": 0,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Damage Reduced by 20%",
+              "Infinite": false,
+              "Duration": "2",
+              "ExpireType": 0,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Damage Reduced by 5%",
+              "Infinite": false,
+              "Duration": "2",
+              "ExpireType": 0,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Sleep",
+              "Infinite": false,
+              "Duration": "2",
+              "ExpireType": 0,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Stunned",
+              "Infinite": false,
+              "Duration": "1",
+              "ExpireType": 0,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Fizzled",
+              "Infinite": false,
+              "Duration": "1",
+              "ExpireType": 1,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Increased Armor",
+              "Infinite": false,
+              "Duration": "2",
+              "ExpireType": 0,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Increased Armor",
+              "Infinite": false,
+              "Duration": "2",
+              "ExpireType": 0,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Increased Damage and Healing by 100%",
+              "Infinite": false,
+              "Duration": "2",
+              "ExpireType": 0,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Increased Damage and Healing by 25%",
+              "Infinite": false,
+              "Duration": "2",
+              "ExpireType": 0,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Increased Damage and Healing by 10%",
+              "Infinite": false,
+              "Duration": "2",
+              "ExpireType": 0,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Fizzled",
+              "Infinite": false,
+              "Duration": "1",
+              "ExpireType": 1,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Greater Heal",
+              "Infinite": false,
+              "Duration": "0",
+              "ExpireType": 1,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": [
+                {
+                  "RawExpression": "TargetStored[\"Healing\"] = Target[\"MaxHealth\"]",
+                  "StatType": "None",
+                  "Coefficient": 0.0,
+                  "EffectType": "Healing"
+                }
+              ]
+            },
+            {
+              "Name": "Heal",
+              "Infinite": false,
+              "Duration": "0",
+              "ExpireType": 1,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": [
+                {
+                  "RawExpression": "TargetStored[\"Healing\"] = Source.SpellPower(\"Light\") * 1.0f",
+                  "StatType": "None",
+                  "Coefficient": 0.0,
+                  "EffectType": "Healing"
+                }
+              ]
+            },
+            {
+              "Name": "Lesser Heal",
+              "Infinite": false,
+              "Duration": "0",
+              "ExpireType": 1,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": [
+                {
+                  "RawExpression": "TargetStored[\"Healing\"] = Source.SpellPower(\"Light\") * .5f",
+                  "StatType": "None",
+                  "Coefficient": 0.0,
+                  "EffectType": "Healing"
+                }
+              ]
+            },
+            {
+              "Name": "Invincible",
+              "Infinite": false,
+              "Duration": "1",
+              "ExpireType": 0,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Increased Damage and Healing by 1000%",
+              "Infinite": false,
+              "Duration": "5",
+              "ExpireType": 0,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            },
+            {
+              "Name": "Death",
+              "Infinite": false,
+              "Duration": "0",
+              "ExpireType": 1,
+              "MaintainManaRatio": 1.0,
+              "AuraRadius": 3,
+              "DamageEffects": []
+            }
+          ],
+          "SourceStatusEffects": [],
+          "DamageEffects": [],
+          "DamageRangePercent": 15.0
+        }
+      ]
     },
     {
       "Skill": {
@@ -3998,7 +4331,7 @@
         {
           "name": "Chilling Strike",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -4365,7 +4698,7 @@
         {
           "name": "Frost Nova",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -4471,7 +4804,7 @@
         {
           "name": "Ice Lance",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -4893,7 +5226,7 @@
         {
           "name": "Frozen Spikes",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -5092,7 +5425,7 @@
         {
           "name": "Breath of Winter",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -5442,7 +5775,7 @@
         {
           "name": "Ice Storm",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -6139,7 +6472,7 @@
         {
           "name": "Fireblast",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -6514,7 +6847,7 @@
         {
           "name": "Fireball",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -6619,7 +6952,7 @@
         {
           "name": "Enchant Fire",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -6732,7 +7065,7 @@
         {
           "name": "Burning Ground",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -6868,7 +7201,7 @@
         {
           "name": "Detonate",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -7080,7 +7413,7 @@
         {
           "name": "Aura Of Flame",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -7344,7 +7677,7 @@
         {
           "name": "Meteor",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -7548,7 +7881,7 @@
         {
           "name": "Fissure",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -7712,7 +8045,7 @@
         {
           "name": "Meteor Shower",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -7924,7 +8257,7 @@
         {
           "name": "Fire Storm",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -8171,7 +8504,7 @@
         {
           "name": "Move Object",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -8870,7 +9203,7 @@
           "ChargesPerBattle": "",
           "StartingBattleCharges": "",
           "RestoreAllChargesOnTownReturn": false,
-          "Cost": 0,
+          "Cost": 1,
           "ManaCostRatio": 1.8,
           "AddWeaponCost": false,
           "NumCasts": "",
@@ -9242,7 +9575,7 @@
         {
           "name": "Light's Beckon",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -9699,6 +10032,28 @@
     },
     {
       "Skill": {
+        "SkillName": "Light's Intuition",
+        "Description": "Increase @reflex@ by 20%.",
+        "SkillType": 4,
+        "DamageType": 0,
+        "SkillTags": [
+          6
+        ],
+        "TooltipDamageInfoRefAction": null,
+        "Level": 0,
+        "Tier": 3,
+        "Dependency": null,
+        "xVal": 5.0,
+        "iconName": "tholyring",
+        "PassiveStatusData": [],
+        "DontIncludeInTree": false,
+        "ForceShowGlobalStatusDesc": false,
+        "IsPassive": true
+      },
+      "Actions": []
+    },
+    {
+      "Skill": {
         "SkillName": "Divine Intervention",
         "Description": "Restores the target to full health.",
         "SkillType": 4,
@@ -10080,7 +10435,7 @@
     {
       "Skill": {
         "SkillName": "Ascendancy",
-        "Description": "Increases the target allies' stats by 40%.",
+        "Description": "Increases the target allies' stats by 20%.",
         "SkillType": 4,
         "DamageType": 0,
         "SkillTags": [
@@ -10168,7 +10523,7 @@
             {
               "Name": "Ascendancy",
               "Infinite": false,
-              "Duration": "2",
+              "Duration": "5",
               "ExpireType": 0,
               "MaintainManaRatio": 1.0,
               "AuraRadius": 3,
@@ -10389,7 +10744,7 @@
         {
           "name": "Dazzling Darts",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -10494,7 +10849,7 @@
         {
           "name": "Shock",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -10965,7 +11320,7 @@
         {
           "name": "Twister",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -11356,7 +11711,7 @@
         {
           "name": "Thunder Bolt",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -11457,7 +11812,7 @@
         {
           "name": "Teleport Other",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -11691,7 +12046,7 @@
         {
           "name": "Thunder Storm",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -12395,7 +12750,7 @@
         {
           "name": "Front Kick",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -12793,7 +13148,7 @@
         {
           "name": "Stunning Kick",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -12906,7 +13261,7 @@
         {
           "name": "Force Kick",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -13233,7 +13588,7 @@
         {
           "name": "Pain Suppression",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -14842,9 +15197,9 @@
     {
       "Skill": {
         "SkillName": "Frost Breath",
-        "Description": "Burns the target for *0 fire damage each turn.",
+        "Description": "Deals *0 cold damage each turn.",
         "SkillType": 9,
-        "DamageType": 2,
+        "DamageType": 3,
         "SkillTags": [
           7,
           4,
@@ -15535,7 +15890,7 @@
         {
           "name": "Lightning Breath",
           "OverrideDescriptionAndName": false,
-          "Description": null,
+          "Description": "",
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -15603,7 +15958,7 @@
           "SourceStatusEffects": [],
           "DamageEffects": [
             {
-              "RawExpression": "TargetStored[\"ColdDamage\"] = Source.SpellPower(\"Cold\") * 1.6f",
+              "RawExpression": "TargetStored[\"LightningDamage\"] = Source.SpellPower(\"Lightning\") * 1.6f",
               "StatType": "None",
               "Coefficient": 0.0,
               "EffectType": "Other"
@@ -20139,7 +20494,7 @@
         {
           "name": "Relocate",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -20786,7 +21141,7 @@
         {
           "name": "Long Shot",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -21284,7 +21639,7 @@
         {
           "name": "Sniper Shot",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -21393,7 +21748,7 @@
         {
           "name": "Called Shot",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -22431,6 +22786,286 @@
     },
     {
       "Skill": {
+        "SkillName": "Raise Undead Berserker",
+        "Description": "Raise an Undead Berserker to fight by your side.",
+        "SkillType": 6,
+        "DamageType": 0,
+        "SkillTags": [
+          6,
+          4
+        ],
+        "TooltipDamageInfoRefAction": null,
+        "Level": 0,
+        "Tier": 3,
+        "Dependency": null,
+        "xVal": 4.0,
+        "iconName": "shd3a4raiseskeletalwarrioricon",
+        "PassiveStatusData": [],
+        "DontIncludeInTree": true,
+        "ForceShowGlobalStatusDesc": false,
+        "IsPassive": false
+      },
+      "Actions": [
+        {
+          "name": "[Necronomicon] Raise Undead Berserker",
+          "OverrideDescriptionAndName": false,
+          "Description": null,
+          "DescriptionExpressions": [],
+          "DamageExpressionOverrides": [],
+          "IgnoreSourceStatus": false,
+          "SkipTextAndAnimation": false,
+          "OverrideActionName": false,
+          "ActionNameOverride": "",
+          "OverrideSkillType": false,
+          "OverrideDamageStatType": false,
+          "UseActionChances": false,
+          "TargetTextOverride": "",
+          "UseMaxRangeOverride": false,
+          "MaxRangeOverride": 0,
+          "UseMaxRangeBlastOverride": false,
+          "MaxRangeBlastOverride": 0,
+          "UseKnockback": false,
+          "KnockbackAmount": 1,
+          "UseMultipleHits": false,
+          "NumHits": 1,
+          "MultipleHitRange": "1",
+          "UseNumHitsEquation": false,
+          "NumHitsEquation": "",
+          "HitInterval": 0.5,
+          "MultipleHitTarget": "Cell == Target.Cell",
+          "MultipleHitTargetOrderBy": "",
+          "MultipleHitTargetRandomize": false,
+          "UseCondition": "",
+          "UseConditionFailText": "",
+          "CostsMana": true,
+          "ManaCost": 22,
+          "Cooldown": "4",
+          "HasCharges": false,
+          "MaxCharges": "",
+          "InitialCharges": "",
+          "ChargesPerBattle": "",
+          "StartingBattleCharges": "",
+          "RestoreAllChargesOnTownReturn": false,
+          "Cost": 1,
+          "ManaCostRatio": 2.4,
+          "AddWeaponCost": false,
+          "NumCasts": "",
+          "UseGlobalDamageRange": false,
+          "SkillTags": [
+            6,
+            4
+          ],
+          "HasWeaponRequirement": false,
+          "HasWeaponRequirementTypes": false,
+          "HasWeaponRequirementTags": false,
+          "RequiredWeaponTags": [],
+          "RequiredWeaponTypes": [],
+          "UseSimpleTargetingRange": true,
+          "SimpleRange": 5,
+          "UseSimpleTargetingBlast": false,
+          "SimpleBlastRange": 0,
+          "BlastRange": null,
+          "TargetGlobal": false,
+          "RangeSelection": null,
+          "UseGroundEffect": false,
+          "GroundDuration": "",
+          "GroundIsInfinite": false,
+          "Deactivatable": false,
+          "StatusEffects": [],
+          "SourceStatusEffects": [],
+          "DamageEffects": [],
+          "DamageRangePercent": 0.0
+        }
+      ]
+    },
+    {
+      "Skill": {
+        "SkillName": "Raise Undead Ranger",
+        "Description": "Raise an Undead Ranger to fight by your side.",
+        "SkillType": 6,
+        "DamageType": 0,
+        "SkillTags": [
+          4
+        ],
+        "TooltipDamageInfoRefAction": null,
+        "Level": 0,
+        "Tier": 1,
+        "Dependency": null,
+        "xVal": 4.0,
+        "iconName": "shd1a4raiseskeletalarchericon",
+        "PassiveStatusData": [],
+        "DontIncludeInTree": true,
+        "ForceShowGlobalStatusDesc": false,
+        "IsPassive": false
+      },
+      "Actions": [
+        {
+          "name": "[Necronomicon] Raise Undead Ranger",
+          "OverrideDescriptionAndName": false,
+          "Description": null,
+          "DescriptionExpressions": [],
+          "DamageExpressionOverrides": [],
+          "IgnoreSourceStatus": false,
+          "SkipTextAndAnimation": false,
+          "OverrideActionName": false,
+          "ActionNameOverride": "",
+          "OverrideSkillType": false,
+          "OverrideDamageStatType": false,
+          "UseActionChances": false,
+          "TargetTextOverride": "",
+          "UseMaxRangeOverride": false,
+          "MaxRangeOverride": 0,
+          "UseMaxRangeBlastOverride": false,
+          "MaxRangeBlastOverride": 0,
+          "UseKnockback": false,
+          "KnockbackAmount": 1,
+          "UseMultipleHits": false,
+          "NumHits": 1,
+          "MultipleHitRange": "1",
+          "UseNumHitsEquation": false,
+          "NumHitsEquation": "",
+          "HitInterval": 0.5,
+          "MultipleHitTarget": "Cell == Target.Cell",
+          "MultipleHitTargetOrderBy": "",
+          "MultipleHitTargetRandomize": false,
+          "UseCondition": "",
+          "UseConditionFailText": "",
+          "CostsMana": true,
+          "ManaCost": 16,
+          "Cooldown": "3",
+          "HasCharges": false,
+          "MaxCharges": "",
+          "InitialCharges": "",
+          "ChargesPerBattle": "",
+          "StartingBattleCharges": "",
+          "RestoreAllChargesOnTownReturn": false,
+          "Cost": 1,
+          "ManaCostRatio": 1.7,
+          "AddWeaponCost": false,
+          "NumCasts": "",
+          "UseGlobalDamageRange": false,
+          "SkillTags": [
+            4
+          ],
+          "HasWeaponRequirement": false,
+          "HasWeaponRequirementTypes": false,
+          "HasWeaponRequirementTags": false,
+          "RequiredWeaponTags": [],
+          "RequiredWeaponTypes": [],
+          "UseSimpleTargetingRange": true,
+          "SimpleRange": 5,
+          "UseSimpleTargetingBlast": false,
+          "SimpleBlastRange": 0,
+          "BlastRange": null,
+          "TargetGlobal": false,
+          "RangeSelection": null,
+          "UseGroundEffect": false,
+          "GroundDuration": "",
+          "GroundIsInfinite": false,
+          "Deactivatable": false,
+          "StatusEffects": [],
+          "SourceStatusEffects": [],
+          "DamageEffects": [],
+          "DamageRangePercent": 0.0
+        }
+      ]
+    },
+    {
+      "Skill": {
+        "SkillName": "Raise Undead Wizard",
+        "Description": "Raise a Undead Wizard to fight by your side.",
+        "SkillType": 6,
+        "DamageType": 0,
+        "SkillTags": [
+          6,
+          4
+        ],
+        "TooltipDamageInfoRefAction": null,
+        "Level": 0,
+        "Tier": 5,
+        "Dependency": null,
+        "xVal": 4.0,
+        "iconName": "tnhancerpgiconsghostland",
+        "PassiveStatusData": [],
+        "DontIncludeInTree": true,
+        "ForceShowGlobalStatusDesc": false,
+        "IsPassive": false
+      },
+      "Actions": [
+        {
+          "name": "[Necronomicon] Raise Undead Wizard",
+          "OverrideDescriptionAndName": false,
+          "Description": null,
+          "DescriptionExpressions": [],
+          "DamageExpressionOverrides": [],
+          "IgnoreSourceStatus": false,
+          "SkipTextAndAnimation": false,
+          "OverrideActionName": false,
+          "ActionNameOverride": "",
+          "OverrideSkillType": false,
+          "OverrideDamageStatType": false,
+          "UseActionChances": false,
+          "TargetTextOverride": "",
+          "UseMaxRangeOverride": false,
+          "MaxRangeOverride": 0,
+          "UseMaxRangeBlastOverride": false,
+          "MaxRangeBlastOverride": 0,
+          "UseKnockback": false,
+          "KnockbackAmount": 1,
+          "UseMultipleHits": false,
+          "NumHits": 1,
+          "MultipleHitRange": "1",
+          "UseNumHitsEquation": false,
+          "NumHitsEquation": "",
+          "HitInterval": 0.5,
+          "MultipleHitTarget": "Cell == Target.Cell",
+          "MultipleHitTargetOrderBy": "",
+          "MultipleHitTargetRandomize": false,
+          "UseCondition": "",
+          "UseConditionFailText": "",
+          "CostsMana": true,
+          "ManaCost": 31,
+          "Cooldown": "5",
+          "HasCharges": false,
+          "MaxCharges": "",
+          "InitialCharges": "",
+          "ChargesPerBattle": "",
+          "StartingBattleCharges": "",
+          "RestoreAllChargesOnTownReturn": false,
+          "Cost": 1,
+          "ManaCostRatio": 3.4,
+          "AddWeaponCost": false,
+          "NumCasts": "",
+          "UseGlobalDamageRange": false,
+          "SkillTags": [
+            6,
+            4
+          ],
+          "HasWeaponRequirement": false,
+          "HasWeaponRequirementTypes": false,
+          "HasWeaponRequirementTags": false,
+          "RequiredWeaponTags": [],
+          "RequiredWeaponTypes": [],
+          "UseSimpleTargetingRange": true,
+          "SimpleRange": 5,
+          "UseSimpleTargetingBlast": false,
+          "SimpleBlastRange": 0,
+          "BlastRange": null,
+          "TargetGlobal": false,
+          "RangeSelection": null,
+          "UseGroundEffect": false,
+          "GroundDuration": "",
+          "GroundIsInfinite": false,
+          "Deactivatable": false,
+          "StatusEffects": [],
+          "SourceStatusEffects": [],
+          "DamageEffects": [],
+          "DamageRangePercent": 0.0
+        }
+      ]
+    },
+    {
+      "Skill": {
         "SkillName": "Raise Iron Golem",
         "Description": "Raise a Mighty Iron Golem to fight for you.",
         "SkillType": 6,
@@ -22658,7 +23293,7 @@
         {
           "name": "Tainted Touch",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -22766,7 +23401,7 @@
         {
           "name": "Ghost Armor",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -23256,7 +23891,7 @@
         {
           "name": "Haunt",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -23368,7 +24003,7 @@
         {
           "name": "Curse",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -23656,7 +24291,7 @@
         {
           "name": "Consumption",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -24030,7 +24665,7 @@
         {
           "name": "Soul Link",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -24509,7 +25144,7 @@
         {
           "name": "Soul Exchange",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -24618,7 +25253,7 @@
         {
           "name": "Reaper's Scythe",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -24979,7 +25614,7 @@
         {
           "name": "Escape",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -25071,7 +25706,7 @@
         {
           "name": "Cripple",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -25186,7 +25821,7 @@
         {
           "name": "Dagger Throw",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -25367,7 +26002,7 @@
         {
           "name": "Evasion",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -25478,7 +26113,7 @@
         {
           "name": "Gouge",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -25602,7 +26237,7 @@
         {
           "name": "Maim",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -25826,7 +26461,7 @@
         {
           "name": "Poisoned Dagger Throw",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -25946,7 +26581,7 @@
         {
           "name": "Hide In Shadows",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -26128,7 +26763,7 @@
         {
           "name": "Enduring Evasion",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -27573,7 +28208,7 @@
         {
           "name": "Rage",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -27677,7 +28312,7 @@
         {
           "name": "Double Edge",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -28086,7 +28721,7 @@
         {
           "name": "Berserker's Rage",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -28188,7 +28823,7 @@
         {
           "name": "Tempered Rage",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -28290,7 +28925,7 @@
         {
           "name": "Bloodlet",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -28407,7 +29042,7 @@
         {
           "name": "Cleave",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -29135,7 +29770,7 @@
         {
           "name": "Slam",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -29351,7 +29986,7 @@
         {
           "name": "Bleeding Cleave",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -29681,7 +30316,7 @@
         {
           "name": "Crushing Slam",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,
@@ -29784,7 +30419,7 @@
         {
           "name": "Stunning Slam",
           "OverrideDescriptionAndName": false,
-          "Description": "",
+          "Description": null,
           "DescriptionExpressions": [],
           "DamageExpressionOverrides": [],
           "IgnoreSourceStatus": false,

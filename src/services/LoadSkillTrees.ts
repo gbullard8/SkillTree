@@ -10,6 +10,20 @@ import { TREE_NODE_SIZE, TREE_X_STEP } from '../utils/treeCanvasLayout'
 const MIN_GAP_PX = 8
 const MIN_STEP = (TREE_NODE_SIZE + MIN_GAP_PX) / TREE_X_STEP  // minimum xVal gap between nodes
 
+const SKILLS_EXCLUDED_FROM_TREE = new Set([
+  '0:Fickle Flame',
+  '5:Animal Companion Grizzly',
+  '5:Beast Master I',
+  '5:Beast Master II',
+  '5:Summon Raven',
+  '5:Summon Wolf',
+  '10:Body and Soul',
+])
+
+function shouldExcludeFromTree(rawSkill: any) {
+  return rawSkill.DontIncludeInTree || SKILLS_EXCLUDED_FROM_TREE.has(`${rawSkill.SkillType}:${rawSkill.SkillName}`)
+}
+
 function resolveCollisions(nodes: SkillNode[]) {
   const byId = new Map(nodes.map(n => [n.id, n]))
 
@@ -124,7 +138,7 @@ export function loadSkillTrees(): SkillTrees {
       isPassive: rawSkill.IsPassive
   }
 
-    if (rawSkill.DontIncludeInTree) continue
+    if (shouldExcludeFromTree(rawSkill)) continue
 
     // Fix broken exports where a skill has the same name as its dependency.
     // In this case the skill is actually the next tier — rename "Foo I" → "Foo II".
