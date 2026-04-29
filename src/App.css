@@ -34,3 +34,78 @@
   -webkit-user-select: none;
   -webkit-user-drag: none;
 }
+
+@media (hover: none) and (pointer: coarse), (max-width: 1024px) {
+  .App {
+    --mobile-portrait-min-width: 960px;
+    --mobile-landscape-min-width: 1024px;
+    --mobile-landscape-min-height: 600px;
+    min-width: 0;
+    min-height: 100dvh;
+    overflow: visible;
+    background-attachment: scroll;
+  }
+
+  .content-wrapper {
+    position: relative;
+    min-width: 0;
+    min-height: 100dvh;
+  }
+
+  .logo {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 10;
+    width: clamp(144px, 22vmin, 216px);
+    margin: 0;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+}
+
+@media ((hover: none) and (pointer: coarse) and (orientation: portrait)), (max-width: 1024px) and (orientation: portrait) {
+  html,
+  body {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .App {
+    --page-layout-height: max(100dvh, 560px);
+    --page-layout-width: max(calc(var(--page-layout-height) * 1.7), var(--mobile-portrait-min-width));
+    width: var(--page-layout-width);
+    min-width: var(--page-layout-width);
+    height: var(--page-layout-height);
+    min-height: var(--page-layout-height);
+  }
+
+  .content-wrapper {
+    width: var(--page-layout-width);
+    min-width: var(--page-layout-width);
+    height: var(--page-layout-height);
+    min-height: var(--page-layout-height);
+  }
+}
+
+@media ((hover: none) and (pointer: coarse) and (orientation: landscape)), (max-width: 1024px) and (orientation: landscape) {
+  html,
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .App {
+    --page-layout-width: max(100vw, var(--mobile-landscape-min-width));
+    --page-layout-height: max(calc(var(--page-layout-width) / 1.7), var(--mobile-landscape-min-height));
+    width: var(--page-layout-width);
+    min-width: var(--page-layout-width);
+    min-height: var(--page-layout-height);
+  }
+
+  .content-wrapper {
+    width: var(--page-layout-width);
+    min-width: var(--page-layout-width);
+    min-height: var(--page-layout-height);
+  }
+}

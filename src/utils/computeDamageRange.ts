@@ -41,8 +41,8 @@ export function applyDamageRange(description: string, node: SkillNode): string {
   values.forEach((v, i) => {
     const display = formatValue(v);
     result = result
-      .replace(new RegExp(`\\[${i}\\]`, 'g'), display)
-      .replace(new RegExp(`\\*${i}`, 'g'), display);
+      .replace(new RegExp(`\\[${i}\\]`, 'g'), `{HL=${display}}`)
+      .replace(new RegExp(`\\*${i}`, 'g'), `{HL=${display}}`);
   });
 
   return result;

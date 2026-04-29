@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { type CSSProperties, useLayoutEffect, useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { SkillNode } from '../models/SkillNode';
 import { EQUIPMENT_TYPE_NAMES } from '../models/Action';
@@ -17,17 +17,56 @@ type Props = {
   allNodes: SkillNode[];
 };
 
+const TOOLTIP_BASE_WIDTH = 380;
+
+const shouldCenterTooltip = () =>
+  window.matchMedia('(hover: none) and (pointer: coarse)').matches || window.innerWidth <= 1024;
+
 const SkillNodeComponent = ({ node, allNodes }: Props) => {
   const { selectedTab, treeStates, allocatePoint, deallocatePoint } = useTalentTree();
-  const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null);
+  const [tooltipPos, setTooltipPos] = useState<{ left: number; top: number; right: number; bottom: number; scale: number; centered: boolean } | null>(null);
+  const [tooltipLayout, setTooltipLayout] = useState<{ left: number; top: number } | null>(null);
   const nodeRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
 
   const treeState = treeStates[selectedTab];
   const allocatedPoints = treeState?.allocations[node.id] || 0;
   const isUnlocked = allocatedPoints > 0;
   const isAvailable = canUnlock(node, allNodes, treeState);
+  const canApplyPoint = !isUnlocked && isAvailable;
+  const canUnlearnPoint = isUnlocked && !!treeState && canDeallocate(node, allNodes, treeState);
+  const canUseMobilePrimaryAction = canApplyPoint || canUnlearnPoint;
+
+  const showTooltip = () => {
+    if (!nodeRef.current) return;
+
+    const rect = nodeRef.current.getBoundingClientRect();
+    const nodeScale = rect.width / 64;
+    const centeredTooltip = shouldCenterTooltip();
+    const maxViewportScale = (window.innerWidth * 0.9) / TOOLTIP_BASE_WIDTH;
+
+    setTooltipLayout(null);
+    setTooltipPos({
+      left: rect.left,
+      top: rect.top,
+      right: rect.right,
+      bottom: rect.bottom,
+      scale: centeredTooltip ? Math.min(nodeScale, maxViewportScale) : nodeScale,
+      centered: centeredTooltip,
+    });
+  };
+
+  const closeTooltip = () => {
+    setTooltipPos(null);
+    setTooltipLayout(null);
+  };
 
   const handleClick = () => {
+    if (shouldCenterTooltip()) {
+      showTooltip();
+      return;
+    }
+
     if (isUnlocked) {
       if (treeState && canDeallocate(node, allNodes, treeState)) {
         deallocatePoint(node.id, node.tier);
@@ -38,14 +77,13 @@ const SkillNodeComponent = ({ node, allNodes }: Props) => {
   };
 
   const handleMouseEnter = () => {
-    if (nodeRef.current) {
-      const rect = nodeRef.current.getBoundingClientRect();
-      setTooltipPos({ x: rect.left, y: rect.top });
-    }
+    if (shouldCenterTooltip()) return;
+    showTooltip();
   };
 
   const handleMouseLeave = () => {
-    setTooltipPos(null);
+    if (shouldCenterTooltip()) return;
+    closeTooltip();
   };
 
   let nodeClass = 'skill-node';
@@ -80,19 +118,74 @@ const SkillNodeComponent = ({ node, allNodes }: Props) => {
     ? damageTypeEntry
     : null;
 
+  useLayoutEffect(() => {
+    if (!tooltipPos || !tooltipRef.current) return;
+
+    const margin = 8 * tooltipPos.scale;
+    const tooltipRect = tooltipRef.current.getBoundingClientRect();
+
+    if (tooltipPos.centered) {
+      setTooltipLayout({
+        left: Math.max(margin, (window.innerWidth - tooltipRect.width) / 2),
+        top: Math.max(margin, (window.innerHeight - tooltipRect.height) / 2),
+      });
+      return;
+    }
+
+    const clampedLeft = Math.min(
+      Math.max(tooltipPos.left, margin),
+      window.innerWidth - tooltipRect.width - margin
+    );
+    let top = tooltipPos.top - tooltipRect.height - margin;
+
+    if (top < margin) {
+      top = tooltipPos.bottom + margin;
+    }
+
+    if (top + tooltipRect.height > window.innerHeight - margin) {
+      top = Math.max(margin, window.innerHeight - tooltipRect.height - margin);
+    }
+
+    setTooltipLayout({ left: clampedLeft, top });
+  }, [tooltipPos]);
+
   const tooltip = tooltipPos && ReactDOM.createPortal(
-    <div
-      className="skill-tooltip"
-      style={{
-        position: 'fixed',
-        left: tooltipPos.x,
-        top: Math.max(0, tooltipPos.y - 10),
-        transform: 'translateY(-100%)',
-      }}
-    >
+    <>
+      {tooltipPos.centered && (
+        <div
+          className="skill-tooltip-backdrop"
+          onPointerDown={closeTooltip}
+          onClick={closeTooltip}
+          aria-hidden="true"
+        />
+      )}
+      <div
+        ref={tooltipRef}
+        className="skill-tooltip"
+        onPointerDown={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          position: 'fixed',
+          left: tooltipLayout?.left ?? tooltipPos.left,
+          top: tooltipLayout?.top ?? tooltipPos.top,
+          visibility: tooltipLayout ? 'visible' : 'hidden',
+          '--tooltip-scale': tooltipPos.scale,
+        } as CSSProperties}
+      >
+      <button
+        type="button"
+        className="tooltip-close"
+        aria-label="Close tooltip"
+        onClick={(e) => {
+          e.stopPropagation();
+          closeTooltip();
+        }}
+      />
       <div className="tooltip-header">
-        <img className="tooltip-icon" src={`/icons/${node.skill.id}.png`} alt=""
-          onError={(e) => { if (node.requires) (e.target as HTMLImageElement).src = `/icons/${node.requires}.png`; }} />
+        <span className="tooltip-icon-frame" aria-hidden="true">
+          <img className="tooltip-icon" src={`/icons/${node.skill.id}.png`} alt=""
+            onError={(e) => { if (node.requires) (e.target as HTMLImageElement).src = `/icons/${node.requires}.png`; }} />
+        </span>
         <div className="tooltip-title">{node.skill.skillName}</div>
       </div>
       <div className="tooltip-divider" />
@@ -171,8 +264,39 @@ const SkillNodeComponent = ({ node, allNodes }: Props) => {
         </div>
       )}
 
+      <div className="tooltip-mobile-actions">
+        <button
+          type="button"
+          className="tooltip-mobile-action"
+          disabled={!canUseMobilePrimaryAction}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (canApplyPoint) {
+              allocatePoint(node.id, node.tier);
+            } else if (canUnlearnPoint) {
+              deallocatePoint(node.id, node.tier);
+            } else {
+              return;
+            }
+            closeTooltip();
+          }}
+        >
+          {isUnlocked ? 'Unlearn' : 'Apply'}
+        </button>
+        <button
+          type="button"
+          className="tooltip-mobile-action"
+          onClick={(e) => {
+            e.stopPropagation();
+            closeTooltip();
+          }}
+        >
+          Close
+        </button>
+      </div>
 
-    </div>,
+      </div>
+    </>,
     document.body
   );
 

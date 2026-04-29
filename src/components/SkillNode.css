@@ -133,93 +133,187 @@
   
   /* Tooltip container — rendered via React Portal at document.body */
   .skill-tooltip {
-    width: 260px;
-    padding: 8px;
-    background-color: rgba(10, 8, 5, 0.97);
-    color: #ddd;
-    border: 1px solid #555;
-    border-radius: 4px;
+    --tooltip-scale: 1;
+    width: calc(380px * var(--tooltip-scale));
+    box-sizing: border-box;
+    padding: calc(11px * var(--tooltip-scale)) calc(11px * var(--tooltip-scale)) calc(7px * var(--tooltip-scale));
+    background: transparent;
+    border: calc(10px * var(--tooltip-scale)) solid transparent;
+    border-image-source: url('/public/icons/tabs/select_dropdown_container sliced.png');
+    border-image-slice: 16 fill;
+    border-image-width: calc(10px * var(--tooltip-scale));
+    border-image-repeat: stretch;
+    color: #f0eee9;
     z-index: 99999;
     pointer-events: none;
-    font-size: 0.78em;
-    line-height: 1.3;
+    font-family: Cambria, Georgia, 'Times New Roman', serif;
+    font-size: calc(16px * var(--tooltip-scale));
+    line-height: 1.18;
+    text-shadow: 0 calc(1px * var(--tooltip-scale)) calc(1px * var(--tooltip-scale)) #000;
+  }
+
+  .tooltip-close {
+    position: absolute;
+    display: none;
+    top: calc(8px * var(--tooltip-scale));
+    right: calc(8px * var(--tooltip-scale));
+    z-index: 4;
+    width: calc(33px * var(--tooltip-scale));
+    height: calc(33px * var(--tooltip-scale));
+    padding: 0;
+    border: 0;
+    background: url('/public/icons/tabs/c_header_close.png') center / contain no-repeat;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+
+  .tooltip-close:hover,
+  .tooltip-close:focus-visible {
+    filter: brightness(1.18);
+    outline: none;
   }
 
   .tooltip-header {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 4px;
+    gap: calc(14px * var(--tooltip-scale));
+    padding-right: calc(40px * var(--tooltip-scale));
+    margin-bottom: calc(12px * var(--tooltip-scale));
+  }
+
+  .tooltip-icon-frame {
+    position: relative;
+    display: flex;
+    width: calc(68px * var(--tooltip-scale));
+    height: calc(68px * var(--tooltip-scale));
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    background-image: url('/public/talentbackground/mp2_frame_sliced.png');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .tooltip-icon-frame::before {
+    content: "";
+    position: absolute;
+    inset: 8%;
+    background-image: url('/public/icons/tabs/tgb_avatar_overlay icon shadow overlay.png');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.72;
+  }
+
+  .tooltip-icon-frame::after {
+    content: "";
+    position: absolute;
+    inset: 9%;
+    background-image: url('/public/icons/tabs/inset_square_highlight.svg');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 2;
   }
 
   .tooltip-icon {
-    width: 36px;
-    height: 36px;
+    width: calc(56px * var(--tooltip-scale));
+    height: calc(56px * var(--tooltip-scale));
     object-fit: contain;
-    flex-shrink: 0;
+    filter: none;
   }
 
   .tooltip-title {
-    font-size: 1.25em;
+    font-size: calc(22px * var(--tooltip-scale));
     font-weight: bold;
-    color: #fff;
-    letter-spacing: 0.04em;
+    color: #d8c197;
+    line-height: 1;
+    font-variant-caps: small-caps;
+    font-feature-settings: "smcp";
+    letter-spacing: 0;
   }
 
   .tooltip-divider {
-    border-top: 1px solid #555;
-    margin-bottom: 4px;
+    border-top: calc(2px * var(--tooltip-scale)) solid rgba(116, 103, 78, 0.42);
+    margin: 0 0 calc(26px * var(--tooltip-scale));
   }
 
   .tooltip-requires-more-points {
-    color: #c0392b;
-    margin-bottom: 1px;
+    color: #c64334;
+    margin-bottom: calc(2px * var(--tooltip-scale));
+    font-weight: bold;
+    font-size: calc(14px * var(--tooltip-scale));
   }
 
   .tooltip-select-to-learn-text {
-    color: #e8c87a;
-    margin-bottom: 1px;
+    color: #f0eee9;
+    margin-bottom: calc(14px * var(--tooltip-scale));
+    font-size: calc(15px * var(--tooltip-scale));
+    font-weight: 600;
   }
 
   .tooltip-cost {
-    color: #aaa;
-    margin-bottom: 4px;
+    color: #d5bf98;
+    margin-bottom: calc(24px * var(--tooltip-scale));
+    font-size: calc(14px * var(--tooltip-scale));
+    font-weight: 600;
   }
 
   .tooltip-desc {
-    color: #ccc;
-    margin-top: 4px;
-    margin-bottom: 4px;
-    line-height: 1.4;
+    color: #f0eee9;
+    margin: 0 0 calc(18px * var(--tooltip-scale));
+    font-size: calc(15px * var(--tooltip-scale));
+    font-weight: 600;
+    line-height: 1.16;
+  }
+
+  .tooltip-highlight {
+    color: #d5bf98;
+    text-transform: capitalize;
+  }
+
+  .tooltip-highlight-number {
+    text-transform: none;
   }
 
   .tooltip-weapon-req {
-    color: #e8c87a;
-    margin-bottom: 4px;
+    color: #d5bf98;
+    margin-bottom: calc(14px * var(--tooltip-scale));
+    font-size: calc(14px * var(--tooltip-scale));
+    font-weight: 600;
   }
 
   .tooltip-damage-applies {
-    color: #ccc;
-    margin-bottom: 4px;
+    color: #f0eee9;
+    margin-bottom: calc(18px * var(--tooltip-scale));
+    font-size: calc(14px * var(--tooltip-scale));
+    font-weight: 600;
   }
 
   .tooltip-stats {
-    border-top: 1px solid #555;
-    padding-top: 4px;
-    margin-top: 2px;
+    border-top: 0;
+    padding-top: 0;
+    margin-top: calc(2px * var(--tooltip-scale));
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    color: #ccc;
+    gap: calc(1px * var(--tooltip-scale));
+    color: #f0eee9;
+    font-size: calc(14px * var(--tooltip-scale));
+    font-weight: 600;
+    line-height: 1.12;
   }
 
   .tooltip-statuses {
-    margin-top: 8px;
-    border-top: 1px solid #555;
-    padding-top: 6px;
+    margin-top: calc(24px * var(--tooltip-scale));
+    border-top: calc(2px * var(--tooltip-scale)) solid rgba(116, 103, 78, 0.42);
+    padding-top: calc(14px * var(--tooltip-scale));
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: calc(2px * var(--tooltip-scale));
   }
 
   .tooltip-status-entry {
@@ -228,12 +322,73 @@
   }
 
   .tooltip-status-name {
-    color: #e8c87a;
+    color: #d5bf98;
     font-style: italic;
-    font-size: 0.85em;
+    font-size: calc(14px * var(--tooltip-scale));
+    font-weight: 600;
   }
 
   .tooltip-status-desc {
-    color: #ccc;
-    font-size: 0.8em;
+    color: #d5bf98;
+    font-size: calc(14px * var(--tooltip-scale));
+    font-weight: 600;
+    line-height: 1.12;
   }
+
+  .tooltip-mobile-actions {
+    display: none;
+  }
+
+  .skill-tooltip-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 99998;
+    background: rgba(0, 0, 0, 0.45);
+    pointer-events: auto;
+    touch-action: none;
+  }
+
+@media (hover: none) and (pointer: coarse), (max-width: 1024px) {
+  .skill-tooltip {
+    max-width: 90vw;
+    max-height: 90dvh;
+    overflow-y: auto;
+    pointer-events: auto;
+  }
+
+  .tooltip-close {
+    display: block;
+  }
+
+  .tooltip-header {
+    padding-right: calc(40px * var(--tooltip-scale));
+  }
+
+  .tooltip-mobile-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: calc(12px * var(--tooltip-scale));
+    margin-top: calc(22px * var(--tooltip-scale));
+  }
+
+  .tooltip-mobile-action {
+    min-height: calc(42px * var(--tooltip-scale));
+    padding: calc(8px * var(--tooltip-scale)) calc(14px * var(--tooltip-scale));
+    border: 0;
+    background: url('/public/icons/tabs/mp2_frame sliced icon text & allocation.png') center / 100% 100% no-repeat;
+    color: #d8c197;
+    cursor: pointer;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: calc(18px * var(--tooltip-scale));
+    font-variant-caps: small-caps;
+    font-weight: 700;
+    line-height: 1;
+    text-shadow: 0 calc(1px * var(--tooltip-scale)) calc(2px * var(--tooltip-scale)) #000;
+  }
+
+  .tooltip-mobile-action:disabled {
+    color: #77716a;
+    cursor: default;
+    filter: grayscale(1) brightness(0.65);
+  }
+}
