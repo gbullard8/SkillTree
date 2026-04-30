@@ -1,10 +1,11 @@
 .App {
   --desktop-min-width: 1280px;
   --desktop-min-height: 720px;
+  --talent-tree-ratio: 1.82;
   --page-layout-width: max(100%, var(--desktop-min-width));
   --page-layout-height: max(100vh, var(--desktop-min-height));
-  --logo-min-width: 192px;
-  --logo-max-width: 288px;
+  --tree-layout-width: min(calc(var(--page-layout-width) * 0.94), calc(var(--page-layout-height) * 0.96 * var(--talent-tree-ratio)));
+  --logo-width: calc(var(--tree-layout-width) * 0.19);
   text-align: center;
   width: 100%;
   min-width: var(--desktop-min-width);
@@ -27,8 +28,17 @@
   justify-content: start;
 }
 
+.logo-row {
+  width: var(--tree-layout-width);
+  min-width: var(--tree-layout-width);
+  display: flex;
+  justify-content: center;
+  flex: 0 0 auto;
+  margin: 0 auto;
+}
+
 .logo {
-  width: clamp(var(--logo-min-width), calc(var(--page-layout-width) * 0.15), var(--logo-max-width));
+  width: var(--logo-width);
   height: auto;
   margin-top: calc(var(--page-layout-height) * 0.001);
   margin-bottom: calc(var(--page-layout-height) * -0.001);
@@ -52,14 +62,12 @@
 
   .content-wrapper {
     position: relative;
-    min-width: 0;
     min-height: 100dvh;
   }
 
-  .logo {
-    width: clamp(144px, 22vmin, 216px);
+  .logo-row {
+    display: none;
   }
-
 }
 
 @media ((hover: none) and (pointer: coarse) and (orientation: portrait)), (max-width: 1024px) and (orientation: portrait) {
@@ -72,6 +80,7 @@
   .App {
     --page-layout-height: max(100dvh, 560px);
     --page-layout-width: max(calc(var(--page-layout-height) * 1.7), var(--mobile-portrait-min-width));
+    --tree-layout-width: calc(var(--page-layout-height) * var(--talent-tree-ratio));
     width: var(--page-layout-width);
     min-width: var(--page-layout-width);
     height: var(--page-layout-height);
@@ -96,6 +105,7 @@
   .App {
     --page-layout-width: max(100vw, var(--mobile-landscape-min-width));
     --page-layout-height: max(calc(var(--page-layout-width) / 1.7), var(--mobile-landscape-min-height));
+    --tree-layout-width: var(--page-layout-width);
     width: var(--page-layout-width);
     min-width: var(--page-layout-width);
     min-height: var(--page-layout-height);

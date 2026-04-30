@@ -6,12 +6,14 @@ function App() {
   return (
     <div className="App">
       <div className="content-wrapper">
-        <img
-          src={assetUrl('/talentbackground/SRLogo.png')}
-          alt="Stolen Realm"
-          className="logo"
-          draggable={false}
-        />
+        <div className="logo-row">
+          <img
+            src={assetUrl('/talentbackground/SRLogo.png')}
+            alt="Stolen Realm"
+            className="logo"
+            draggable={false}
+          />
+        </div>
         <TalentTree />
       </div>
     </div>
