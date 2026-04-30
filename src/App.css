@@ -5,7 +5,7 @@
   --page-layout-width: max(100%, var(--desktop-min-width));
   --page-layout-height: max(100vh, var(--desktop-min-height));
   --tree-layout-width: min(calc(var(--page-layout-width) * 0.94), calc(var(--page-layout-height) * 0.96 * var(--talent-tree-ratio)));
-  --logo-width: calc(var(--tree-layout-width) * 0.19);
+  --logo-width: clamp(144px, 19%, 420px);
   text-align: center;
   width: 100%;
   min-width: var(--desktop-min-width);
@@ -49,7 +49,7 @@
   -webkit-user-drag: none;
 }
 
-@media (hover: none) and (pointer: coarse), (max-width: 1024px) {
+@media (hover: none) and (pointer: coarse) {
   .App {
     --mobile-portrait-min-width: 960px;
     --mobile-landscape-min-width: 1024px;
@@ -70,7 +70,7 @@
   }
 }
 
-@media ((hover: none) and (pointer: coarse) and (orientation: portrait)), (max-width: 1024px) and (orientation: portrait) {
+@media (hover: none) and (pointer: coarse) and (orientation: portrait) {
   html,
   body {
     overflow-x: auto;
@@ -95,7 +95,7 @@
   }
 }
 
-@media ((hover: none) and (pointer: coarse) and (orientation: landscape)), (max-width: 1024px) and (orientation: landscape) {
+@media (hover: none) and (pointer: coarse) and (orientation: landscape) {
   html,
   body {
     overflow-x: auto;

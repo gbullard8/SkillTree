@@ -251,7 +251,7 @@
   z-index: 3;
 }
 
-@media ((hover: none) and (pointer: coarse) and (orientation: portrait)), (max-width: 1024px) and (orientation: portrait) {
+@media (hover: none) and (pointer: coarse) and (orientation: portrait) {
   .talent-tree-container {
     width: calc(var(--page-layout-height) * var(--talent-tree-ratio));
     min-width: calc(var(--page-layout-height) * var(--talent-tree-ratio));
@@ -260,7 +260,7 @@
   }
 }
 
-@media ((hover: none) and (pointer: coarse) and (orientation: landscape)), (max-width: 1024px) and (orientation: landscape) {
+@media (hover: none) and (pointer: coarse) and (orientation: landscape) {
   .talent-tree-container {
     width: var(--page-layout-width);
     min-width: var(--page-layout-width);
