@@ -2,7 +2,7 @@ body {
   margin: 0;
   overflow: auto;
   min-height: 100vh;
-  background: #100c09 url('/public/talentbackground/SRBackground.png') center / cover fixed no-repeat;
+  background: #100c09 url('./assets/talentbackground/SRBackground.png') center / cover fixed no-repeat;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

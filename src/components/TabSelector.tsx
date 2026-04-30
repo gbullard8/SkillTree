@@ -1,4 +1,5 @@
 import './TabSelector.css';
+import { assetUrl } from '../utils/assetUrl';
 
 type Props = {
   tabs: string[];
@@ -8,17 +9,17 @@ type Props = {
 };
 
 const tabImages: Record<string, string> = {
-  Fire: '/icons/aura_of_flame.png',
-  Lightning: '/icons/enchant_lightning.png',
-  Cold: '/icons/mass_freeze.png',
-  Warrior: '/icons/colossus.png',
-  Light: '/icons/mass_cure.png',
-  Ranger: '/icons/tabs/Ranger.PNG',
-  Shadow: '/icons/soul_exchange.png',
-  Thief: '/icons/poison_weapon.png',
-  Monk: '/icons/meditation.png',
-  Nature: '/icons/mass_entangle.png',
-  Chaos: '/icons/perturb.png',
+  Fire: assetUrl('/icons/aura_of_flame.png'),
+  Lightning: assetUrl('/icons/enchant_lightning.png'),
+  Cold: assetUrl('/icons/mass_freeze.png'),
+  Warrior: assetUrl('/icons/colossus.png'),
+  Light: assetUrl('/icons/mass_cure.png'),
+  Ranger: assetUrl('/icons/tabs/Ranger.PNG'),
+  Shadow: assetUrl('/icons/soul_exchange.png'),
+  Thief: assetUrl('/icons/poison_weapon.png'),
+  Monk: assetUrl('/icons/meditation.png'),
+  Nature: assetUrl('/icons/mass_entangle.png'),
+  Chaos: assetUrl('/icons/perturb.png'),
 };
 
 const TabSelector = ({ tabs, selected, onSelect, pointCounts }: Props) => (

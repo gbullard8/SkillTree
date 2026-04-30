@@ -1,6 +1,7 @@
 {
   "name": "stolenrealmsite",
   "version": "0.1.0",
+  "homepage": "https://gbullard8.github.io/SkillTree",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",

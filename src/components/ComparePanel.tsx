@@ -6,6 +6,7 @@ import { parseDescription } from '../utils/parseDescription';
 import { applyDamageRange } from '../utils/computeDamageRange';
 import { STATUS_EFFECTS } from '../data/statusEffects';
 import { SPECIAL_DURATION_SKILLS, SPECIAL_BLAST_RADIUS_SKILLS, SPECIAL_RANGE_SKILLS, DURATION_OVERRIDE, AP_COST_OVERRIDE } from '../data/specialValues';
+import { assetUrl } from '../utils/assetUrl';
 import './ComparePanel.css';
 
 type Props = {
@@ -58,7 +59,7 @@ const ComparePanel = ({ nodes, treeState, onClose }: Props) => {
           return (
             <div key={node.id} className={`compare-card${isUnlocked ? ' compare-card-allocated' : ''}`}>
               <div className="tooltip-header">
-                <img className="tooltip-icon" src={`/icons/${node.skill.id}.png`} alt="" />
+                <img className="tooltip-icon" src={assetUrl(`/icons/${node.skill.id}.png`)} alt="" />
                 <div className="tooltip-title">{node.skill.skillName}</div>
               </div>
               <div className="tooltip-divider" />

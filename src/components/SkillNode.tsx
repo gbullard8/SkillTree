@@ -9,6 +9,7 @@ import { applyDamageRange } from '../utils/computeDamageRange';
 import { STATUS_EFFECTS } from '../data/statusEffects';
 import { SPECIAL_DURATION_SKILLS, SPECIAL_BLAST_RADIUS_SKILLS, SPECIAL_RANGE_SKILLS, DURATION_OVERRIDE, AP_COST_OVERRIDE } from '../data/specialValues';
 import { getNodeLeft, getNodeTop } from '../utils/treeCanvasLayout';
+import { assetUrl } from '../utils/assetUrl';
 import './SkillNode.css';
 
 
@@ -183,8 +184,8 @@ const SkillNodeComponent = ({ node, allNodes }: Props) => {
       />
       <div className="tooltip-header">
         <span className="tooltip-icon-frame" aria-hidden="true">
-          <img className="tooltip-icon" src={`/icons/${node.skill.id}.png`} alt=""
-            onError={(e) => { if (node.requires) (e.target as HTMLImageElement).src = `/icons/${node.requires}.png`; }} />
+          <img className="tooltip-icon" src={assetUrl(`/icons/${node.skill.id}.png`)} alt=""
+            onError={(e) => { if (node.requires) (e.target as HTMLImageElement).src = assetUrl(`/icons/${node.requires}.png`); }} />
         </span>
         <div className="tooltip-title">{node.skill.skillName}</div>
       </div>
@@ -317,10 +318,10 @@ const SkillNodeComponent = ({ node, allNodes }: Props) => {
       <div className="skill-node-inner">
         <span className="skill-icon-art" aria-hidden="true">
           <img className='skill-icon'
-            src={`/icons/${node.skill.id}.png`}
+            src={assetUrl(`/icons/${node.skill.id}.png`)}
             alt={`${node.skill.id}  (${node.skill.skillName})`}
             draggable={false}
-            onError={(e) => { if (node.requires) (e.target as HTMLImageElement).src = `/icons/${node.requires}.png`; }}
+            onError={(e) => { if (node.requires) (e.target as HTMLImageElement).src = assetUrl(`/icons/${node.requires}.png`); }}
           />
         </span>
       </div>

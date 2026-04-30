@@ -9,7 +9,7 @@
   width: 100%;
   min-width: var(--desktop-min-width);
   min-height: var(--page-layout-height);
-  background-image: url('/public/talentbackground/SRBackground.png');
+  background-image: url('./assets/talentbackground/SRBackground.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -8,6 +8,7 @@ import SkillConnectors from './SkillConnectors';
 import TabSelector from './TabSelector';
 import LevelSelector from './LevelSelector';
 import { TREE_CANVAS_HEIGHT, TREE_CANVAS_WIDTH } from '../utils/treeCanvasLayout';
+import { assetUrl } from '../utils/assetUrl';
 import './TalentTree.css';
 
 const preloadedImages = new Map<string, HTMLImageElement>();
@@ -28,17 +29,17 @@ const tabs = [
 ];
 
 const tabImages: Record<string, string> = {
-  Fire: '/icons/aura_of_flame.png',
-  Lightning: '/icons/enchant_lightning.png',
-  Cold: '/icons/mass_freeze.png',
-  Warrior: '/icons/colossus.png',
-  Light: '/icons/mass_cure.png',
-  Ranger: '/icons/tabs/Ranger.PNG',
-  Shadow: '/icons/soul_exchange.png',
-  Thief: '/icons/poison_weapon.png',
-  Monk: '/icons/meditation.png',
-  Nature: '/icons/mass_entangle.png',
-  Chaos: '/icons/perturb.png',
+  Fire: assetUrl('/icons/aura_of_flame.png'),
+  Lightning: assetUrl('/icons/enchant_lightning.png'),
+  Cold: assetUrl('/icons/mass_freeze.png'),
+  Warrior: assetUrl('/icons/colossus.png'),
+  Light: assetUrl('/icons/mass_cure.png'),
+  Ranger: assetUrl('/icons/tabs/Ranger.PNG'),
+  Shadow: assetUrl('/icons/soul_exchange.png'),
+  Thief: assetUrl('/icons/poison_weapon.png'),
+  Monk: assetUrl('/icons/meditation.png'),
+  Nature: assetUrl('/icons/mass_entangle.png'),
+  Chaos: assetUrl('/icons/perturb.png'),
 };
 
 const DESIGNED_TREE_WIDTH = 1613;
@@ -83,7 +84,7 @@ const TalentTree = () => {
 
     for (const tree of Object.values(trees)) {
       for (const node of tree.nodes) {
-        preloadImage(`/icons/${node.skill.id}.png`);
+        preloadImage(assetUrl(`/icons/${node.skill.id}.png`));
       }
     }
 
