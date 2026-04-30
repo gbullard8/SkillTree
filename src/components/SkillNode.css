@@ -58,7 +58,6 @@
   pointer-events: none;
   -webkit-user-drag: none;
   filter: grayscale(100%);
-  transition: filter 0.15s ease;
 }
 
 .skill-node.allocated .skill-icon {

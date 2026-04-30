@@ -223,6 +223,7 @@
   padding: calc(8px * var(--talent-scale)) 0;
   position: relative;
   overflow: visible;
+  isolation: isolate;
 }
 
 .skill-tree-viewport {
@@ -248,6 +249,7 @@
   pointer-events: none;
   opacity: 0.98;
   transform-origin: center;
+  backface-visibility: hidden;
   z-index: 3;
 }
 
