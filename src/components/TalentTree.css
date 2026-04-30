@@ -1,8 +1,8 @@
 .talent-tree-container{
-  --talent-tree-ratio: 1.70;
+  --talent-tree-ratio: 1.82;
   --talent-scale: 1;
   position: relative;
-  width: min(calc(var(--page-layout-width) * 0.84), calc(var(--page-layout-height) * 0.88 * var(--talent-tree-ratio)));
+  width: min(calc(var(--page-layout-width) * 0.94), calc(var(--page-layout-height) * 0.96 * var(--talent-tree-ratio)));
   height: auto;
   aspect-ratio: var(--talent-tree-ratio);
   margin: 0 auto;
@@ -19,7 +19,6 @@
   position: relative;
 }
 
-
 .skill-tree-grid {
   position: absolute;
   left: 50%;
@@ -34,9 +33,9 @@
 }
 
 .talent-tree-topbar {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  justify-content: center;
   position: absolute;
   top: calc(-85px * var(--talent-scale));
   left: calc(28px * var(--talent-scale));
@@ -52,6 +51,7 @@
 }
 
 .topbar-title {
+  grid-column: 2;
   font-family: Georgia, 'Times New Roman', serif;
   font-size: calc(40px * var(--talent-scale));
   font-variant: small-caps;
@@ -67,10 +67,8 @@
 }
 
 .points-spent {
-  position: absolute;
-  right: calc(24px * var(--talent-scale));
-  top: 50%;
-  transform: translateY(-50%);
+  grid-column: 3;
+  justify-self: center;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -128,6 +126,8 @@
   line-height: 1;
   white-space: nowrap;
   color: #d4bc8b;
+  user-select: none;
+  -webkit-user-select: none;
   text-shadow:
     0 1px 0 rgba(255, 245, 220, 0.1),
     0 2px 3px rgba(0, 0, 0, 0.8);
@@ -169,6 +169,8 @@
   line-height: 1;
   color: #d4ba88;
   text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
   text-shadow:
     0 1px 0 rgba(255, 245, 220, 0.12),
     0 2px 3px rgba(0, 0, 0, 0.72);

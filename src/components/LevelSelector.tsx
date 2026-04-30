@@ -38,7 +38,7 @@ const LevelSelector = () => {
       <div className="level-selector">
         <button className="level-btn" onClick={decrement} disabled={isAtMinLevel}>−</button>
         <div className="level-display">
-          <span className="level-label">Level</span>
+          <span className="level-label">Level:</span>
           <span className="level-number">{level}</span>
         </div>
         <button className="level-btn" onClick={increment} disabled={isAtMaxLevel}>+</button>

@@ -63,7 +63,15 @@ const preloadImage = (src: string) => {
 };
 
 const TalentTree = () => {
-  const { selectedTab, selectTab, totalPointsSpent, availablePoints, treeStates } = useTalentTree();
+  const {
+    selectedTab,
+    selectTab,
+    totalPointsSpent,
+    availablePoints,
+    treeStates,
+    resetCurrentTree,
+    resetAllTrees,
+  } = useTalentTree();
   const [treeScale, setTreeScale] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -127,6 +135,14 @@ const TalentTree = () => {
       </div>
 
       <div className="tab-header-container">
+        <div className="tab-reset-actions">
+          <button className="tab-reset-button" type="button" onClick={resetCurrentTree}>
+            Reset Tree
+          </button>
+          <button className="tab-reset-button" type="button" onClick={resetAllTrees}>
+            Reset All
+          </button>
+        </div>
         <TabSelector tabs={tabs} selected={selectedTab} onSelect={selectTab} pointCounts={tabPointCounts} />
       </div>
 

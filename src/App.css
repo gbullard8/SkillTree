@@ -19,10 +19,12 @@
 .content-wrapper {
   width: 100%;
   min-width: var(--desktop-min-width);
+  min-height: var(--page-layout-height);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: start;
 }
 
 .logo {
@@ -30,6 +32,8 @@
   height: auto;
   margin-top: calc(var(--page-layout-height) * 0.001);
   margin-bottom: calc(var(--page-layout-height) * -0.001);
+  flex: 0 0 auto;
+  pointer-events: none;
   user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
@@ -53,15 +57,9 @@
   }
 
   .logo {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    z-index: 10;
     width: clamp(144px, 22vmin, 216px);
-    margin: 0;
-    transform: translateX(-50%);
-    pointer-events: none;
   }
+
 }
 
 @media ((hover: none) and (pointer: coarse) and (orientation: portrait)), (max-width: 1024px) and (orientation: portrait) {
@@ -91,7 +89,7 @@
 @media ((hover: none) and (pointer: coarse) and (orientation: landscape)), (max-width: 1024px) and (orientation: landscape) {
   html,
   body {
-    overflow-x: hidden;
+    overflow-x: auto;
     overflow-y: auto;
   }
 

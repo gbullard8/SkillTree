@@ -51,25 +51,34 @@
 
 .level-display {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  gap: calc(8px * var(--talent-scale));
   min-width: calc(60px * var(--talent-scale));
   user-select: none;
   -webkit-user-select: none;
 }
 
 .level-label {
-  font-size: calc(13px * var(--talent-scale));
-  color: #a89060;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  line-height: 1;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: calc(30px * var(--talent-scale));
+  font-variant: small-caps;
+  color: #d4bc8b;
+  text-shadow:
+    0 1px 0 rgba(255, 245, 220, 0.1),
+    0 2px 3px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0;
+  line-height: 1.1;
 }
 
 .level-number {
+  font-family: Georgia, 'Times New Roman', serif;
   font-size: calc(30px * var(--talent-scale));
-  color: #f0e0a0;
-  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+  color: #d4bc8b;
+  text-shadow:
+    0 1px 0 rgba(255, 245, 220, 0.1),
+    0 2px 3px rgba(0, 0, 0, 0.8);
   line-height: 1.1;
 }
 

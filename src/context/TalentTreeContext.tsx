@@ -16,6 +16,8 @@ type TalentTreeContextType = {
   level: number;
   setLevel: (level: number) => void;
   availablePoints: number;
+  resetCurrentTree: () => void;
+  resetAllTrees: () => void;
 };
 
 const TalentTreeContext = createContext<TalentTreeContextType | undefined>(undefined);
@@ -87,8 +89,22 @@ export const TalentTreeProvider = ({ children }: { children: React.ReactNode }) 
     });
   };
 
+  const resetCurrentTree = () => {
+    setTreeStates((prev) => {
+      if (!prev[selectedTab]) return prev;
+
+      const next = { ...prev };
+      delete next[selectedTab];
+      return next;
+    });
+  };
+
+  const resetAllTrees = () => {
+    setTreeStates({});
+  };
+
   return (
-    <TalentTreeContext.Provider value={{ treeStates, selectedTab, selectTab, allocatePoint, deallocatePoint, totalPointsSpent, level, setLevel, availablePoints }}>
+    <TalentTreeContext.Provider value={{ treeStates, selectedTab, selectTab, allocatePoint, deallocatePoint, totalPointsSpent, level, setLevel, availablePoints, resetCurrentTree, resetAllTrees }}>
       {children}
     </TalentTreeContext.Provider>
   );
