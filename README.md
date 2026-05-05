@@ -1,59 +1,147 @@
-# Getting Started with Create React App
+# Stolen Realm Skill Tree
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Interactive skill tree calculator for Stolen Realm. The app is a Create React App/TypeScript project that reads exported skill data, builds the tree tabs, and lets users spend/refund talent points with the same tier and dependency rules used by the in-game trees.
 
-## Available Scripts
+## Running The App
 
-In the project directory, you can run:
+```bash
+npm start
+```
 
-### `npm start`
+Build for GitHub Pages/static hosting:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+npm run build
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The configured homepage is:
 
-### `npm test`
+```text
+https://gbullard8.github.io/SkillTree
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## How The App Works
 
-### `npm run build`
+1. `src/services/LoadSkillTrees.ts` imports `src/data/SkillData.json`.
+2. Each exported skill entry is converted into a local `SkillNode`.
+3. `SkillType` is mapped to a tree name using `src/data/treeMap.ts`.
+4. `xVal`, `Tier`, `Dependency`, and `IsPassive` from the JSON decide where the node appears and what unlocks it.
+5. `src/components/TalentTree.tsx` renders the selected tree, tabs, point counters, reset buttons, and level selector.
+6. `src/components/SkillNode.tsx` renders each node and its tooltip.
+7. Tooltip text is cleaned up by `src/utils/computeDamageRange.ts` and `src/utils/parseDescription.tsx`.
+8. Point spending rules are handled by `src/utils/CanUnlock.ts` and stored in `src/context/TalentTreeContext.tsx`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Data Files
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+`src/data/SkillData.json`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Primary exported skill data. This is bundled at build time because it is imported from `src`. Keep it here unless the goal is to load/replace data at runtime without rebuilding.
 
-### `npm run eject`
+`public/icons`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Skill icon files. The app expects each icon to match the normalized skill id, for example:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```text
+Aura of Flame -> aura_of_flame.png
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+If a skill icon is missing and the skill has a dependency, the node tries to fall back to the dependency icon.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+`public/talentbackground`
 
-fire - aura of flame
-lightning - enchant lightning
-cold - mass freeze
-warrior - colossus 
-light - mass cure
-ranger - 
-shadow - soul exchange
-thief - poison weapon
-monk - meditation
-nature - mass entangle
-chaos - 
+Runtime background and frame assets used by the UI.
 
-## Learn More
+`src/assets`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Source-side copies of several image assets. The running UI mostly references the copies in `public` through `assetUrl`.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Tree Names
+
+File: `src/data/treeMap.ts`
+
+Maps numeric `SkillType` IDs from `SkillData.json` to display tree names
+
+### Visible Tabs And Tab Icons
+
+Files:
+
+```text
+src/components/TalentTree.tsx
+src/components/TabSelector.tsx
+```
+
+The visible tab order and tab icon image for each tree are set manually in both files:
+
+```text
+Fire, Lightning, Cold, Warrior, Light, Ranger, Shadow, Thief, Monk, Nature, Chaos
+```
+
+If a tab is added, removed, renamed, or its icon changes, update both places.
+
+### Skill Exclusions
+
+File: `src/services/LoadSkillTrees.ts`
+
+Some skills are manually excluded from the rendered tree:
+
+```text
+0:Fickle Flame
+5:Animal Companion Grizzly
+5:Beast Master I
+5:Beast Master II
+5:Summon Raven
+5:Summon Wolf
+10:Body and Soul
+```
+
+Skills are also excluded when the raw JSON has `DontIncludeInTree`.
+
+### Layout Numbers
+
+File: `src/utils/treeCanvasLayout.ts`
+
+Tree layout is controlled by manual canvas constants:
+
+```text
+TREE_CANVAS_WIDTH
+TREE_CANVAS_HEIGHT
+TREE_NODE_SIZE
+TREE_CENTER_XVAL
+TREE_X_STEP
+TREE_TOP_OFFSET
+TREE_TIER_STEP
+```
+
+File: `src/services/LoadSkillTrees.ts`
+
+Active and passive nodes are mirrored manually from exported `xVal`
+
+That same loader also performs collision cleanup for crowded sibling/tier layouts.
+
+
+### Tooltip Stat Overrides
+
+File: `src/data/specialValues.ts`
+
+Manual tooltip display fixes live here
+
+### Hardcoded Damage And Healing Values
+
+File: `src/data/hardcodedDamage.ts`
+
+Damage values cannot be exported from the project without unreasonable effort. Set damage values here by skill.
+
+## Updating Skill Data
+
+1. Replace `src/data/SkillData.json` with the new export.
+2. Confirm new/renamed skills have matching icon files in `public/icons`.
+3. Check `src/data/treeMap.ts` if any `SkillType` values changed.
+4. Check `src/services/LoadSkillTrees.ts` for exclusions, dependency rename fixes, and layout mirroring.
+5. Review `src/data/specialValues.ts` for incorrect AP cost, duration, range, or blast radius values.
+6. Review `src/data/hardcodedDamage.ts` for skills with unresolved `*0`, `*1`, `[0]`, or `[1]` placeholders.
+7. Review `src/data/statusEffects.ts` for new status names.
+8. Run `npm start` or `npm run build` and inspect each tree.
+
+
+[React documentation](https://reactjs.org/).
 # SkillTree
