@@ -44,6 +44,8 @@
   min-height: calc(54px * var(--talent-scale));
   padding: 0;
   pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .talent-tree-topbar * {
@@ -61,6 +63,8 @@
   text-align: center;
   white-space: nowrap;
   color: #d5bb8b;
+  user-select: none;
+  -webkit-user-select: none;
   text-shadow:
     0 1px 0 rgba(255, 245, 220, 0.18),
     0 2px 3px rgba(0, 0, 0, 0.75);
@@ -180,7 +184,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('../assets/icons/tabs/active_passive.png');
+  background-image: url('../assets/talentbackground/active_passive.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   pointer-events: none;
@@ -242,7 +246,7 @@
   left: 50%;
   transform: translateX(-50%) scaleX(1.3);
   width: calc(16px * var(--talent-scale));
-  background-image: url('../assets/icons/tabs/skill_tree_middle_bar.svg');
+  background-image: url('../assets/talentbackground/skill_tree_middle_bar.svg');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;

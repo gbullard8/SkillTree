@@ -34,7 +34,7 @@ const tabImages: Record<string, string> = {
   Cold: assetUrl('/icons/mass_freeze.png'),
   Warrior: assetUrl('/icons/colossus.png'),
   Light: assetUrl('/icons/mass_cure.png'),
-  Ranger: assetUrl('/icons/tabs/Ranger.PNG'),
+  Ranger: assetUrl('/tabs/Ranger.PNG'),
   Shadow: assetUrl('/icons/soul_exchange.png'),
   Thief: assetUrl('/icons/poison_weapon.png'),
   Monk: assetUrl('/icons/meditation.png'),

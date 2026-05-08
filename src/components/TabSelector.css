@@ -57,7 +57,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url('../assets/icons/tabs/mp2_frame sliced icon text & allocation.png');
+    background-image: url('../assets/talentbackground/mp2_frame sliced icon text & allocation.png');
     background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
@@ -158,7 +158,7 @@
     content: "";
     position: absolute;
     inset: -2%;
-    background-image: url('../assets/icons/tabs/tgb_avatar_overlay icon shadow overlay.png');
+    background-image: url('../assets/talentbackground/tgb_avatar_overlay icon shadow overlay.png');
     background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
@@ -171,7 +171,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url('../assets/icons/tabs/inset_square_highlight.svg');
+    background-image: url('../assets/talentbackground/inset_square_highlight.svg');
     background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
