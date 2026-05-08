@@ -105,40 +105,59 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root">
-      <main class="update-fallback" aria-live="polite">
-        <section class="update-fallback__content" aria-label="Site update status">
-          <img class="update-fallback__logo" src="%PUBLIC_URL%/talentbackground/SRLogo.png" alt="Stolen Realm" />
-          <div class="update-fallback__panel">
-            <p class="update-fallback__message">The website is currently being updated and will be available momentarily.</p>
-            <p class="update-fallback__countdown">Refreshing in <span data-refresh-countdown>20</span> seconds...</p>
-          </div>
-        </section>
-      </main>
-    </div>
+    <div id="root"></div>
     <script>
       (function () {
-        var secondsRemaining = 20;
-        var countdown = document.querySelector('[data-refresh-countdown]');
+        var fallbackDelay = 8000;
+        var root = document.getElementById('root');
 
-        if (!countdown) {
+        if (!root) {
           return;
         }
 
-        var intervalId = window.setInterval(function () {
-          if (!countdown.isConnected) {
-            window.clearInterval(intervalId);
+        function startRefreshCountdown() {
+          var secondsRemaining = 20;
+          var countdown = document.querySelector('[data-refresh-countdown]');
+
+          if (!countdown) {
             return;
           }
 
-          secondsRemaining -= 1;
-          countdown.textContent = String(secondsRemaining);
+          var intervalId = window.setInterval(function () {
+            if (!countdown.isConnected) {
+              window.clearInterval(intervalId);
+              return;
+            }
 
-          if (secondsRemaining <= 0) {
-            window.clearInterval(intervalId);
-            window.location.reload();
+            secondsRemaining -= 1;
+            countdown.textContent = String(secondsRemaining);
+
+            if (secondsRemaining <= 0) {
+              window.clearInterval(intervalId);
+              window.location.reload();
+            }
+          }, 1000);
+        }
+
+        window.setTimeout(function () {
+          if (document.documentElement.dataset.appMounted === 'true' || root.hasChildNodes()) {
+            return;
           }
-        }, 1000);
+
+          root.innerHTML = [
+            '<main class="update-fallback" aria-live="polite">',
+            '<section class="update-fallback__content" aria-label="Site update status">',
+            '<img class="update-fallback__logo" src="%PUBLIC_URL%/talentbackground/SRLogo.png" alt="Stolen Realm" />',
+            '<div class="update-fallback__panel">',
+            '<p class="update-fallback__message">The website is currently being updated and will be available momentarily.</p>',
+            '<p class="update-fallback__countdown">Refreshing in <span data-refresh-countdown>20</span> seconds...</p>',
+            '</div>',
+            '</section>',
+            '</main>'
+          ].join('');
+
+          startRefreshCountdown();
+        }, fallbackDelay);
       })();
     </script>
     <!--
