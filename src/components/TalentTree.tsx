@@ -8,7 +8,7 @@ import SkillConnectors from './SkillConnectors';
 import TabSelector from './TabSelector';
 import LevelSelector from './LevelSelector';
 import { TREE_CANVAS_HEIGHT, TREE_CANVAS_WIDTH } from '../utils/treeCanvasLayout';
-import { assetUrl } from '../utils/assetUrl';
+import { assetUrl, skillIconUrl } from '../utils/assetUrl';
 import './TalentTree.css';
 
 const preloadedImages = new Map<string, HTMLImageElement>();
@@ -84,7 +84,7 @@ const TalentTree = () => {
 
     for (const tree of Object.values(trees)) {
       for (const node of tree.nodes) {
-        preloadImage(assetUrl(`/icons/${node.skill.id}.png`));
+        preloadImage(skillIconUrl(node.skill.id));
       }
     }
 
