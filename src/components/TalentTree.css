@@ -44,6 +44,8 @@
   min-height: calc(54px * var(--talent-scale));
   padding: 0;
   pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .talent-tree-topbar * {
@@ -61,6 +63,8 @@
   text-align: center;
   white-space: nowrap;
   color: #d5bb8b;
+  user-select: none;
+  -webkit-user-select: none;
   text-shadow:
     0 1px 0 rgba(255, 245, 220, 0.18),
     0 2px 3px rgba(0, 0, 0, 0.75);
