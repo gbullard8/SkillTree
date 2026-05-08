@@ -184,7 +184,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('../assets/icons/tabs/active_passive.png');
+  background-image: url('../assets/talentbackground/active_passive.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   pointer-events: none;
@@ -246,7 +246,7 @@
   left: 50%;
   transform: translateX(-50%) scaleX(1.3);
   width: calc(16px * var(--talent-scale));
-  background-image: url('../assets/icons/tabs/skill_tree_middle_bar.svg');
+  background-image: url('../assets/talentbackground/skill_tree_middle_bar.svg');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
