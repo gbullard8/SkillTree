@@ -1,5 +1,5 @@
 import { SkillNode } from '../models/SkillNode';
-import { HARDCODED_DAMAGE, HardcodedValue } from '../data/hardcodedDamage';
+import { DAMAGE_VALUES, DamageValue } from '../data/damageValues';
 
 function getWeapon(node: SkillNode): { min: number; max: number } {
   if (node.skill.skillTags.includes(2)) return { min: 17, max: 22 };
@@ -7,16 +7,16 @@ function getWeapon(node: SkillNode): { min: number; max: number } {
   return { min: 11, max: 15 };
 }
 
-function formatValue(v: HardcodedValue): string {
+function formatValue(v: DamageValue): string {
   const min = v.minDamage;
   const max = v.maxDamage;
   return min === max ? String(min) : `${min}-${max}`;
 }
 
-export function computeDamageValues(node: SkillNode): HardcodedValue[] | null {
-  const hardcoded = HARDCODED_DAMAGE[node.skill.id];
-  if (hardcoded && hardcoded.some(v => v.minDamage !== 0 || v.maxDamage !== 0)) {
-    return hardcoded;
+export function computeDamageValues(node: SkillNode): DamageValue[] | null {
+  const damageValues = DAMAGE_VALUES[node.skill.id];
+  if (damageValues && damageValues.some(v => v.minDamage !== 0 || v.maxDamage !== 0)) {
+    return damageValues;
   }
 
   const multiplier = node.actions[0]?.damageEffects[0]?.damageMultiplier ?? null;

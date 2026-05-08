@@ -2,7 +2,7 @@
 
 Interactive skill tree calculator for Stolen Realm. The app is a Create React App/TypeScript project that reads exported skill data, builds the tree tabs, and lets users spend/refund talent points with the same tier and dependency rules used by the in-game trees.
 
-## Running The App
+## Running the App
 
 ```bash
 npm start
@@ -20,7 +20,7 @@ The configured homepage is:
 https://gbullard8.github.io/SkillTree
 ```
 
-## How The App Works
+## How the App Works
 
 1. `src/services/LoadSkillTrees.ts` imports `src/data/SkillData.json`.
 2. Each exported skill entry is converted into a local `SkillNode`.
@@ -31,11 +31,23 @@ https://gbullard8.github.io/SkillTree
 7. Tooltip text is cleaned up by `src/utils/computeDamageRange.ts` and `src/utils/parseDescription.tsx`.
 8. Point spending rules are handled by `src/utils/CanUnlock.ts` and stored in `src/context/TalentTreeContext.tsx`.
 
+
+## Updating Skill Data
+
+1. Export skill and/or image data from the Unity project. The export currently saves locally, but will be updated to export to the develop GitHub branch.
+2. Replace `src/data/SkillData.json` with the new export to update skill data. Replace `public/icons` with the newly exported icons folder.
+3. Check `src/services/LoadSkillTrees.ts` for exclusions, dependency rename fixes, and layout mirroring.
+4. Review `src/data/specialValues.ts` when exported AP cost, duration, range, or blast radius values are incorrect, and set overrides.
+5. If a skill deals damage or healing, set the values in `src/data/damageValues.ts`. These values were too complex to export cleanly.
+6. Review `src/data/statusEffects.ts` for new status names.
+7. Run `npm start` or `npm run build` and inspect each tree.
+
+
 ## Data Files
 
 `src/data/SkillData.json`
 
-Primary exported skill data. This is bundled at build time because it is imported from `src`. Keep it here unless the goal is to load/replace data at runtime without rebuilding.
+Primary exported skill data. This is bundled at build time because it is imported from `src`. 
 
 `public/icons`
 
@@ -45,23 +57,26 @@ Skill icon files. The app expects each icon to match the normalized skill id, fo
 Aura of Flame -> aura_of_flame.png
 ```
 
-If a skill icon is missing and the skill has a dependency, the node tries to fall back to the dependency icon.
+## Asset Locations
+
+`src/assets/talentbackground`
+
+Bundled talent tree UI assets referenced by CSS, such as frames, overlays, borders, and the main background.
+
+`public/icons`
+
+Runtime skill icons loaded by normalized skill id.
+
+`public/tabs`
+
+Runtime tab icons. The Ranger tab currently uses `public/tabs/Ranger.PNG`.
 
 `public/talentbackground`
 
-Runtime background and frame assets used by the UI.
+Fallback/loading assets used by `public/index.html`, root `index.html`, and runtime public URLs.
 
-`src/assets`
 
-Source-side copies of several image assets. The running UI mostly references the copies in `public` through `assetUrl`.
-
-### Tree Names
-
-File: `src/data/treeMap.ts`
-
-Maps numeric `SkillType` IDs from `SkillData.json` to display tree names
-
-### Visible Tabs And Tab Icons
+### Visible Tabs and Tab Icons
 
 Files:
 
@@ -78,23 +93,7 @@ Fire, Lightning, Cold, Warrior, Light, Ranger, Shadow, Thief, Monk, Nature, Chao
 
 If a tab is added, removed, renamed, or its icon changes, update both places.
 
-### Skill Exclusions
 
-File: `src/services/LoadSkillTrees.ts`
-
-Some skills are manually excluded from the rendered tree:
-
-```text
-0:Fickle Flame
-5:Animal Companion Grizzly
-5:Beast Master I
-5:Beast Master II
-5:Summon Raven
-5:Summon Wolf
-10:Body and Soul
-```
-
-Skills are also excluded when the raw JSON has `DontIncludeInTree`.
 
 ### Layout Numbers
 
@@ -123,25 +122,14 @@ That same loader also performs collision cleanup for crowded sibling/tier layout
 
 File: `src/data/specialValues.ts`
 
-Manual tooltip display fixes live here
+Override imported values here.
 
-### Hardcoded Damage And Healing Values
+A few skills have more complex settings that cannot be reasonably exported.
 
-File: `src/data/hardcodedDamage.ts`
+### Damage Value Settings
 
-Damage values cannot be exported from the project without unreasonable effort. Set damage values here by skill.
+File: `src/data/damageValues.ts`
 
-## Updating Skill Data
+Set damage and healing values here for skills that deal damage or healing.
 
-1. Replace `src/data/SkillData.json` with the new export.
-2. Confirm new/renamed skills have matching icon files in `public/icons`.
-3. Check `src/data/treeMap.ts` if any `SkillType` values changed.
-4. Check `src/services/LoadSkillTrees.ts` for exclusions, dependency rename fixes, and layout mirroring.
-5. Review `src/data/specialValues.ts` for incorrect AP cost, duration, range, or blast radius values.
-6. Review `src/data/hardcodedDamage.ts` for skills with unresolved `*0`, `*1`, `[0]`, or `[1]` placeholders.
-7. Review `src/data/statusEffects.ts` for new status names.
-8. Run `npm start` or `npm run build` and inspect each tree.
-
-
-[React documentation](https://reactjs.org/).
-# SkillTree
+Generating these values requires initializing several game systems, so setting them manually is more efficient.
