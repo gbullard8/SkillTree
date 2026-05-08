@@ -9,7 +9,6 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-
 root.render(
   <React.StrictMode>
     <TalentTreeProvider>
@@ -17,5 +16,7 @@ root.render(
     </TalentTreeProvider>
   </React.StrictMode>
 );
+
+document.documentElement.dataset.appMounted = 'true';
 
 reportWebVitals();
