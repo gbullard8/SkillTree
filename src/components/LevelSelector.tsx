@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useTalentTree } from '../context/TalentTreeContext';
 import './LevelSelector.css';
 
@@ -7,15 +6,11 @@ const MAX_LEVEL = 30;
 
 // Controls the character level while preserving currently allocated points.
 const LevelSelector = () => {
-  const { level, setLevel, totalPointsSpent } = useTalentTree();
-  const [message, setMessage] = useState<string>('');
+  const { level, setLevel } = useTalentTree();
+
   const isAtMinLevel = level <= MIN_LEVEL;
   const isAtMaxLevel = level >= MAX_LEVEL;
 
-  const showMessage = (msg: string) => {
-    setMessage(msg);
-    setTimeout(() => setMessage(''), 2500);
-  };
 
   const increment = () => {
     if (isAtMaxLevel) return;
