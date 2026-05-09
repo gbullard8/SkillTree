@@ -1,16 +1,11 @@
-.level-selector-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
+/* Lays out the decrement button, level value, and increment button. */
 .level-selector {
   display: flex;
   align-items: center;
   gap: calc(14px * var(--talent-scale));
 }
 
+/* Shared button styling for the level stepper controls. */
 .level-btn {
   pointer-events: auto;
   background: none;
@@ -49,6 +44,7 @@
   color: #7b6b55;
 }
 
+/* Keeps the label and number stable as the value changes. */
 .level-display {
   display: flex;
   flex-direction: row;
@@ -80,33 +76,4 @@
     0 1px 0 rgba(255, 245, 220, 0.1),
     0 2px 3px rgba(0, 0, 0, 0.8);
   line-height: 1.1;
-}
-
-.level-message {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-bottom: calc(4px * var(--talent-scale));
-  font-size: calc(14px * var(--talent-scale));
-  color: #e05050;
-  text-align: center;
-  white-space: nowrap;
-  pointer-events: none;
-  animation: fadeIn 0.15s ease;
-  text-shadow:
-    -1px -1px 0 #000,
-    0 -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 0 0 #000,
-    1px 0 0 #000,
-    -1px 1px 0 #000,
-    0 1px 0 #000,
-    1px 1px 0 #000,
-    0 2px 4px rgba(0, 0, 0, 0.85);
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
 }
