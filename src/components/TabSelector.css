@@ -1,4 +1,5 @@
-  .tab-header-container {
+/* Full-width strip that holds reset controls and tree tabs. */
+.tab-header-container {
   background-image: url('../assets/talentbackground/not_container_3.png');
   background-size: 98.5% 100%;
   background-position: center;
@@ -18,224 +19,229 @@
 
   min-height: 0;
   padding: calc(16px * var(--talent-scale)) calc(32px * var(--talent-scale));
-  }
+}
 
-  .tab-reset-actions {
-    position: absolute;
-    right: max(
-      calc(12px * var(--talent-scale)),
-      calc((100% - (1244px * var(--talent-scale))) / 4 - (118px * var(--talent-scale)) / 2)
-    );
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: calc(4px * var(--talent-scale));
-    z-index: 6;
-  }
+/* Positions reset buttons at the right edge of the tab strip. */
+.tab-reset-actions {
+  position: absolute;
+  right: max(
+    calc(12px * var(--talent-scale)),
+    calc((100% - (1244px * var(--talent-scale))) / 4 - (118px * var(--talent-scale)) / 2)
+  );
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(4px * var(--talent-scale));
+  z-index: 6;
+}
 
-  .tab-reset-button {
-    position: relative;
-    width: calc(118px * var(--talent-scale));
-    height: calc(38px * var(--talent-scale));
-    padding: 0 calc(15px * var(--talent-scale));
-    border: 0;
-    background: transparent;
-    color: #dbc28c;
-    cursor: pointer;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: calc(15px * var(--talent-scale));
-    line-height: 1;
-    text-align: center;
-    text-shadow: 0 1px 0 #2f1f10, 0 0 4px rgba(0, 0, 0, 0.45);
-    user-select: none;
-    -webkit-user-select: none;
-  }
+/* Button used for reset actions. */
+.tab-reset-button {
+  position: relative;
+  width: calc(118px * var(--talent-scale));
+  height: calc(38px * var(--talent-scale));
+  padding: 0 calc(15px * var(--talent-scale));
+  border: 0;
+  background: transparent;
+  color: #dbc28c;
+  cursor: pointer;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: calc(15px * var(--talent-scale));
+  line-height: 1;
+  text-align: center;
+  text-shadow: 0 1px 0 #2f1f10, 0 0 4px rgba(0, 0, 0, 0.45);
+  user-select: none;
+  -webkit-user-select: none;
+}
 
-  .tab-reset-button::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url('../assets/talentbackground/mp2_frame sliced icon text & allocation.png');
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    pointer-events: none;
-    z-index: -1;
-  }
+.tab-reset-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('../assets/talentbackground/mp2_frame sliced icon text & allocation.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: -1;
+}
 
-  .tab-reset-button:hover,
-  .tab-reset-button:focus-visible {
-    color: #f0e0a8;
-  }
+.tab-reset-button:hover,
+.tab-reset-button:focus-visible {
+  color: #f0e0a8;
+}
 
-  .tab-reset-button:active {
-    transform: translateY(calc(1px * var(--talent-scale)));
-  }
+.tab-reset-button:active {
+  transform: translateY(calc(1px * var(--talent-scale)));
+}
 
-  .tab-bar {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    flex-wrap: nowrap;
-    gap: calc(10px * var(--talent-scale));
-    width: 100%;
-  }
+/* Horizontal list of skill-tree tab buttons. */
+.tab-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  gap: calc(10px * var(--talent-scale));
+  width: 100%;
+}
 
+/* Square tree tab with framed icon art and label. */
+.tab-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(104px * var(--talent-scale));
+  aspect-ratio: 1 / 1;
+  padding: calc(5px * var(--talent-scale));
+  flex: 0 1 auto;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #d9c08a;
+  font: inherit;
+  user-select: none;
+  -webkit-user-select: none;
+  overflow: visible;
+}
 
-  .tab-button {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: calc(104px * var(--talent-scale));
-    aspect-ratio: 1 / 1;
-    padding: calc(5px * var(--talent-scale));
-    flex: 0 1 auto;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #d9c08a;
-    font: inherit;
-    user-select: none;
-    -webkit-user-select: none;
-    overflow: visible;
-  }
+.tab-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('../assets/talentbackground/mp2_frame_sliced.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+}
 
-  .tab-button::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url('../assets/talentbackground/mp2_frame_sliced.png');
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    pointer-events: none;
-    z-index: 0;
-  }
+.tab-button-art {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 93%;
+  aspect-ratio: 1 / 1;
+  z-index: 1;
+}
 
-  .tab-button-art {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 93%;
-    aspect-ratio: 1 / 1;
-    z-index: 1;
-  }
+/* Small allocation count badge shown only when a tree has points. */
+.tab-button-counter-frame {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  width: 29%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../assets/talentbackground/mp2_frame_sliced.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 5;
+}
 
-  .tab-button-counter-frame {
-    position: absolute;
-    top: 2%;
-    right: 2%;
-    width: 29%;
-    aspect-ratio: 1 / 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: url('../assets/talentbackground/mp2_frame_sliced.png');
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    pointer-events: none;
-    z-index: 5;
-  }
+.tab-button-counter {
+  color: #dbc28c;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: calc(12px * var(--talent-scale));
+  line-height: 1;
+  text-align: center;
+  text-shadow: 0 1px 0 #2f1f10, 0 0 4px rgba(0, 0, 0, 0.45);
+  transform: translateY(-4%);
+  pointer-events: none;
+}
 
-  .tab-button-counter {
-    color: #dbc28c;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: calc(12px * var(--talent-scale));
-    line-height: 1;
-    text-align: center;
-    text-shadow: 0 1px 0 #2f1f10, 0 0 4px rgba(0, 0, 0, 0.45);
-    transform: translateY(-4%);
-    pointer-events: none;
-  }
+.tab-button-art::before {
+  content: "";
+  position: absolute;
+  inset: -2%;
+  background-image: url('../assets/talentbackground/tgb_avatar_overlay icon shadow overlay.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.72;
+}
 
-  .tab-button-art::before {
-    content: "";
-    position: absolute;
-    inset: -2%;
-    background-image: url('../assets/talentbackground/tgb_avatar_overlay icon shadow overlay.png');
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0.72;
-  }
+.tab-button-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('../assets/talentbackground/inset_square_highlight.svg');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 2;
+}
 
-  .tab-button-art::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url('../assets/talentbackground/inset_square_highlight.svg');
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    pointer-events: none;
-    z-index: 2;
-  }
+.tab-button-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  position: relative;
+  z-index: 0;
+  -webkit-user-drag: none;
+}
 
-  .tab-button-icon {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    pointer-events: none;
-    position: relative;
-    z-index: 0;
-    -webkit-user-drag: none;
-  }
+.tab-button-label-frame {
+  position: absolute;
+  left: 50%;
+  bottom: 2%;
+  height: 20%;
+  width: 100%;
+  aspect-ratio: 414 / 118;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(28, 20, 14, 0.9);
+  border-style: solid;
+  border-color: transparent;
+  border-width: calc(3px * var(--talent-scale)) calc(6px * var(--talent-scale)) calc(7px * var(--talent-scale));
+  border-image-source: url('../assets/talentbackground/mp2_frame_sliced.png');
+  border-image-slice: 34 34 108 34 fill;
+  border-image-width: calc(3px * var(--talent-scale)) calc(6px * var(--talent-scale)) calc(7px * var(--talent-scale));
+  border-image-repeat: stretch;
+  pointer-events: none;
+  z-index: 3;
+}
 
-  .tab-button-label-frame {
-    position: absolute;
-    left: 50%;
-    bottom: 2%;
-    height: 20%;
-    width: 100%;
-    aspect-ratio: 414 / 118;
-    transform: translateX(-50%);
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(28, 20, 14, 0.9);
-    border-style: solid;
-    border-color: transparent;
-    border-width: calc(3px * var(--talent-scale)) calc(6px * var(--talent-scale)) calc(7px * var(--talent-scale));
-    border-image-source: url('../assets/talentbackground/mp2_frame_sliced.png');
-    border-image-slice: 34 34 108 34 fill;
-    border-image-width: calc(3px * var(--talent-scale)) calc(6px * var(--talent-scale)) calc(7px * var(--talent-scale));
-    border-image-repeat: stretch;
-    pointer-events: none;
-    z-index: 3;
-  }
+.tab-button-label {
+  color: #dbc28c;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: calc(13px * var(--talent-scale));
+  line-height: 1;
+  text-align: center;
+  text-shadow: 0 1px 0 #2f1f10, 0 0 4px rgba(0, 0, 0, 0.45);
+  transform: translateY(20%);
+  white-space: nowrap;
+  pointer-events: none;
+}
 
-  .tab-button-label {
-    color: #dbc28c;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: calc(13px * var(--talent-scale));
-    line-height: 1;
-    text-align: center;
-    text-shadow: 0 1px 0 #2f1f10, 0 0 4px rgba(0, 0, 0, 0.45);
-    transform: translateY(20%);
-    white-space: nowrap;
-    pointer-events: none;
-  }
-
-  .tab-button.selected::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url('../assets/talentbackground/mp2_frame sliced_white_bright_border.png');
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    pointer-events: none;
-    box-sizing: border-box;
-    z-index: 4;
-    transform: scale(1.1);
-    transform-origin: center;
-  }
+/* Selected tab highlight overlay. */
+.tab-button.selected::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('../assets/talentbackground/mp2_frame sliced_white_bright_border.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  box-sizing: border-box;
+  z-index: 4;
+  transform: scale(1.1);
+  transform-origin: center;
+}

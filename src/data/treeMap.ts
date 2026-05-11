@@ -1,3 +1,4 @@
+// Maps numeric skill-type ids from the export to visible tree names.
 export const TREE_ID_TO_NAME: Record<number, string> = {
   0: 'Fire',
   1: 'Lightning',

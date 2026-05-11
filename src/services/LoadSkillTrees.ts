@@ -8,8 +8,10 @@ import { USE_LAST_ACTION_SKILLS } from '../data/specialValues'
 import { TREE_NODE_SIZE, TREE_X_STEP } from '../utils/treeCanvasLayout'
 
 const MIN_GAP_PX = 8
-const MIN_STEP = (TREE_NODE_SIZE + MIN_GAP_PX) / TREE_X_STEP  // minimum xVal gap between nodes
+// Minimum spacing between nodes, converted from pixels into xVal units.
+const MIN_STEP = (TREE_NODE_SIZE + MIN_GAP_PX) / TREE_X_STEP
 
+// These exports exist in the data file but should not render as tree nodes.
 const SKILLS_EXCLUDED_FROM_TREE = new Set([
   '0:Fickle Flame',
   '5:Animal Companion Grizzly',
@@ -20,10 +22,12 @@ const SKILLS_EXCLUDED_FROM_TREE = new Set([
   '10:Body and Soul',
 ])
 
+// Filters out raw entries marked hidden or known companion/internal skills.
 function shouldExcludeFromTree(rawSkill: any) {
   return rawSkill.DontIncludeInTree || SKILLS_EXCLUDED_FROM_TREE.has(`${rawSkill.SkillType}:${rawSkill.SkillName}`)
 }
 
+// Mutates xVal positions to spread nodes apart while preserving branch structure.
 function resolveCollisions(nodes: SkillNode[]) {
   const byId = new Map(nodes.map(n => [n.id, n]))
 
@@ -35,14 +39,13 @@ function resolveCollisions(nodes: SkillNode[]) {
     }
   }
 
-  // Shift a node and all its descendants.
-  // Positive delta = move left (active direction); negative delta = move right (passive direction).
+  // Positive delta moves active-side nodes outward; negative moves passive-side nodes outward.
   const shiftSubtree = (node: SkillNode, delta: number) => {
     node.xVal -= delta
     for (const child of (childrenOf.get(node.id) ?? [])) shiftSubtree(child, delta)
   }
 
-  // Move a node's whole family unit by delta, keeping centering intact.
+  // Moves a branch family together so paired children stay centered.
   const moveFamily = (node: SkillNode, delta: number) => {
     shiftSubtree(node, delta)
     if (!node.requires) return
@@ -59,9 +62,7 @@ function resolveCollisions(nodes: SkillNode[]) {
     }
   }
 
-  // Fix paired-child spacing.
-  // Active pairs: right child (inner/closer to center) is anchor, left moves further left.
-  // Passive pairs: left child (inner/closer to center) is anchor, right moves further right.
+  // Keeps paired upgrades from overlapping while anchoring the inner child.
   const fixPairs = () => {
     for (const children of Array.from(childrenOf.values())) {
       if (children.length !== 2) continue
@@ -72,14 +73,15 @@ function resolveCollisions(nodes: SkillNode[]) {
       const delta = MIN_STEP - gap
       const parent = byId.get(L.requires!)
       if (L.isPassive) {
-        shiftSubtree(R, -delta)            // passive: R moves right (away from center)
+        shiftSubtree(R, -delta)
       } else {
-        shiftSubtree(L, delta)             // active: L moves left (away from center)
+        shiftSubtree(L, delta)
       }
       if (parent) parent.xVal = (L.xVal + R.xVal) / 2
     }
   }
 
+  // Group nodes by tier and side so active/passive lanes resolve separately.
   const tierGroups = new Map<string, SkillNode[]>()
   for (const n of nodes) {
     const key = `${n.tier}:${n.isPassive}`
@@ -87,9 +89,7 @@ function resolveCollisions(nodes: SkillNode[]) {
     tierGroups.get(key)!.push(n)
   }
 
-  // Tier-level collision resolution.
-  // Active: inner (right) node is anchor — push left nodes further left.
-  // Passive: inner (left) node is anchor — push right nodes further right.
+  // Resolves same-tier collisions from the center outward.
   const fixTiers = () => {
     for (const group of Array.from(tierGroups.values())) {
       group.sort((a: SkillNode, b: SkillNode) => a.xVal - b.xVal)
@@ -107,12 +107,14 @@ function resolveCollisions(nodes: SkillNode[]) {
     }
   }
 
+  // A few passes let pair and tier adjustments settle after moving branches.
   for (let iter = 0; iter < 5; iter++) {
     fixPairs()
     fixTiers()
   }
 }
 
+// Converts display names into stable ids used for dependencies and assets.
 function toSkillId(name: string) {
   return name
     .toLowerCase()
@@ -121,6 +123,7 @@ function toSkillId(name: string) {
     .replace(/[^a-z0-9_]/g, '')
 }
 
+// Converts exported JSON into grouped, positioned skill trees for rendering.
 export function loadSkillTrees(): SkillTrees {
   const trees: SkillTrees = {}
 
@@ -135,13 +138,12 @@ export function loadSkillTrees(): SkillTrees {
       damageType: rawSkill.DamageType,
       skillTags: rawSkill.SkillTags,
       iconName: rawSkill.iconName,
-      isPassive: rawSkill.IsPassive
-  }
+      isPassive: rawSkill.IsPassive,
+    }
 
     if (shouldExcludeFromTree(rawSkill)) continue
 
-    // Fix broken exports where a skill has the same name as its dependency.
-    // In this case the skill is actually the next tier — rename "Foo I" → "Foo II".
+    // Some exported upgrades reuse their dependency name; rename them to tier II.
     if (rawSkill.Dependency && toSkillId(rawSkill.SkillName) === toSkillId(rawSkill.Dependency)) {
       rawSkill.SkillName = rawSkill.SkillName.replace(/\bI\b$/, 'II')
       skill.skillName = rawSkill.SkillName
@@ -159,14 +161,13 @@ export function loadSkillTrees(): SkillTrees {
       trees[treeName] = { name: treeName, nodes: [] }
     }
 
-    var xValBase = rawSkill.xVal;
-    if(skill.isPassive){
-      xValBase = xValBase + 5.5; // xVal=1 nearest center, increasing rightward
-    }else{
-      xValBase = 6.0 - xValBase; // mirror: xVal=1 nearest center, increasing leftward
+    // Mirror active skills to the left and offset passive skills to the right.
+    let xValBase = rawSkill.xVal
+    if (skill.isPassive) {
+      xValBase = xValBase + 5.5
+    } else {
+      xValBase = 6.0 - xValBase
     }
-
-
 
     trees[treeName].nodes.push({
       skill,

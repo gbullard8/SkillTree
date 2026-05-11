@@ -5,6 +5,7 @@ type Props = {
   nodes: SkillNode[];
 };
 
+// Draws parent-child links behind the skill nodes.
 const SkillConnectors = ({ nodes }: Props) => {
   const nodeWidth = TREE_NODE_SIZE;
 

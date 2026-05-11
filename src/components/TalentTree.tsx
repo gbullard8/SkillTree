@@ -1,5 +1,3 @@
-// src/components/TalentTree.tsx
-
 import { type CSSProperties, useMemo, useEffect, useRef, useState } from 'react';
 import { useTalentTree } from '../context/TalentTreeContext';
 import { loadSkillTrees } from '../services/LoadSkillTrees';
@@ -8,12 +6,14 @@ import SkillConnectors from './SkillConnectors';
 import TabSelector from './TabSelector';
 import LevelSelector from './LevelSelector';
 import { TREE_CANVAS_HEIGHT, TREE_CANVAS_WIDTH } from '../utils/treeCanvasLayout';
-import { assetUrl, skillIconUrl } from '../utils/assetUrl';
+import { skillIconUrl } from '../utils/assetUrl';
+import { TAB_IMAGES } from '../data/tabImages';
 import './TalentTree.css';
 
 const preloadedImages = new Map<string, HTMLImageElement>();
 let preloadStarted = false;
 
+// Display order for the skill-tree tabs.
 const tabs = [
   'Fire',
   'Lightning',
@@ -28,23 +28,11 @@ const tabs = [
   'Chaos',
 ];
 
-const tabImages: Record<string, string> = {
-  Fire: assetUrl('/icons/aura_of_flame.png'),
-  Lightning: assetUrl('/icons/enchant_lightning.png'),
-  Cold: assetUrl('/icons/mass_freeze.png'),
-  Warrior: assetUrl('/icons/colossus.png'),
-  Light: assetUrl('/icons/mass_cure.png'),
-  Ranger: assetUrl('/tabs/Ranger.PNG'),
-  Shadow: assetUrl('/icons/soul_exchange.png'),
-  Thief: assetUrl('/icons/poison_weapon.png'),
-  Monk: assetUrl('/icons/meditation.png'),
-  Nature: assetUrl('/icons/mass_entangle.png'),
-  Chaos: assetUrl('/icons/perturb.png'),
-};
-
+// Designed frame width used to convert container width into a CSS scale.
 const DESIGNED_TREE_WIDTH = 1613;
 const SKILL_GRID_BASE_SCALE = 1.32;
 
+// Warms icon assets to avoid flicker when switching tabs or opening tooltips.
 const preloadImage = (src: string) => {
   if (preloadedImages.has(src)) return;
 
@@ -76,8 +64,10 @@ const TalentTree = () => {
   const [treeScale, setTreeScale] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Load and normalize the exported skill data once for this component.
   const trees = useMemo(() => loadSkillTrees(), []);
 
+  // Keep the tree art and node canvas scaled to the rendered frame width.
   useEffect(() => {
     if (preloadStarted) return;
     preloadStarted = true;
@@ -88,7 +78,7 @@ const TalentTree = () => {
       }
     }
 
-    for (const src of Object.values(tabImages)) {
+    for (const src of Object.values(TAB_IMAGES)) {
       preloadImage(src);
     }
   }, [trees]);
@@ -110,6 +100,9 @@ const TalentTree = () => {
   }, []);
 
   const skillTree = trees[selectedTab];
+  const remainingPoints = availablePoints - totalPointsSpent;
+
+  // Counter values shown on each tab.
   const tabPointCounts = useMemo(
     () =>
       Object.fromEntries(
@@ -144,11 +137,16 @@ const TalentTree = () => {
             Reset All
           </button>
         </div>
-        <TabSelector tabs={tabs} selected={selectedTab} onSelect={selectTab} pointCounts={tabPointCounts} />
+        <TabSelector
+          tabs={tabs}
+          selected={selectedTab}
+          onSelect={selectTab}
+          pointCounts={tabPointCounts}
+        />
       </div>
 
-      <div className={`points-remaining-banner ${availablePoints - totalPointsSpent === 0 ? 'points-remaining-empty' : ''}`}>
-        <span>Points Remaining: {availablePoints - totalPointsSpent}</span>
+      <div className={`points-remaining-banner ${remainingPoints === 0 ? 'points-remaining-empty' : ''}`}>
+        <span>Points Remaining: {remainingPoints}</span>
       </div>
 
       <div className="active-passive-banner" aria-hidden="true">

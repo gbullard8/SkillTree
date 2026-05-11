@@ -1,5 +1,6 @@
 const publicUrl = process.env.PUBLIC_URL ?? '';
 
+// Maps skills whose exported id does not match the available icon asset.
 const iconAliases: Record<string, string> = {
   pack_hunter_ii: 'pack_hunter_i',
 };

@@ -1,3 +1,4 @@
+/* Sets the fixed desktop stage and shared sizing variables. */
 .App {
   --desktop-min-width: 1280px;
   --desktop-min-height: 720px;
@@ -17,6 +18,7 @@
   background-attachment: fixed;
 }
 
+/* Centers the logo and talent tree as one vertical layout. */
 .content-wrapper {
   width: 100%;
   min-width: var(--desktop-min-width);
@@ -28,6 +30,7 @@
   justify-content: start;
 }
 
+/* Keeps the logo aligned to the tree frame width. */
 .logo-row {
   width: var(--tree-layout-width);
   min-width: var(--tree-layout-width);
@@ -37,6 +40,7 @@
   margin: 0 auto;
 }
 
+/* Prevents the logo from intercepting input. */
 .logo {
   width: var(--logo-width);
   height: auto;
@@ -49,6 +53,7 @@
   -webkit-user-drag: none;
 }
 
+/* Touch devices use scrollable fixed-ratio stages instead of the desktop minimum. */
 @media (hover: none) and (pointer: coarse) {
   .App {
     --mobile-portrait-min-width: 960px;
@@ -70,6 +75,7 @@
   }
 }
 
+/* Portrait phones keep the wide tree scrollable horizontally. */
 @media (hover: none) and (pointer: coarse) and (orientation: portrait) {
   html,
   body {
@@ -95,6 +101,7 @@
   }
 }
 
+/* Landscape touch devices size the stage from viewport width. */
 @media (hover: none) and (pointer: coarse) and (orientation: landscape) {
   html,
   body {

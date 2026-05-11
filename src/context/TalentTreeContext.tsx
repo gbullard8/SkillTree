@@ -3,7 +3,7 @@ import { getSkillPointCost } from '../utils/CanUnlock';
 
 export type TreeState = {
   pointsSpent: number;
-  allocations: Record<string, number>; 
+  allocations: Record<string, number>;
 };
 
 type TalentTreeContextType = {
@@ -22,6 +22,7 @@ type TalentTreeContextType = {
 
 const TalentTreeContext = createContext<TalentTreeContextType | undefined>(undefined);
 
+// Stores point allocations for each tree and the shared character level.
 export const TalentTreeProvider = ({ children }: { children: React.ReactNode }) => {
   const [treeStates, setTreeStates] = useState<Record<string, TreeState>>({});
   const [selectedTab, setSelectedTab] = useState<string>('Fire');
@@ -32,11 +33,13 @@ export const TalentTreeProvider = ({ children }: { children: React.ReactNode }) 
     0
   );
 
-  // Level 1 = 3 points, each level adds 1
+  // Level 1 starts with 3 points, then each level adds 1.
   const availablePoints = level + 2;
 
   const setLevel = (newLevel: number) => {
     const clampedLevel = Math.max(1, Math.min(30, newLevel));
+    if (clampedLevel + 2 < totalPointsSpent) return;
+
     setLevelState(clampedLevel);
   };
 
@@ -44,6 +47,7 @@ export const TalentTreeProvider = ({ children }: { children: React.ReactNode }) 
     setSelectedTab(tab);
   };
 
+  // Allocates a skill in the selected tree if the global point budget allows it.
   const allocatePoint = (skillId: string, tier: number) => {
     setTreeStates((prev) => {
       const totalSpentBefore = Object.values(prev).reduce(
@@ -53,8 +57,7 @@ export const TalentTreeProvider = ({ children }: { children: React.ReactNode }) 
       const currentTree = prev[selectedTab] || { pointsSpent: 0, allocations: {} };
       const currentPoints = currentTree.allocations[skillId] || 0;
       const pointCost = getSkillPointCost(tier);
-      const maxPoints = level + 2;
-      if (totalSpentBefore + pointCost > maxPoints) return prev;
+      if (totalSpentBefore + pointCost > availablePoints) return prev;
 
       return {
         ...prev,
@@ -69,6 +72,7 @@ export const TalentTreeProvider = ({ children }: { children: React.ReactNode }) 
     });
   };
 
+  // Removes a skill allocation from the selected tree and clears empty entries.
   const deallocatePoint = (skillId: string, tier: number) => {
     setTreeStates((prev) => {
       const currentTree = prev[selectedTab];
@@ -89,6 +93,7 @@ export const TalentTreeProvider = ({ children }: { children: React.ReactNode }) 
     });
   };
 
+  // Removes only the selected tree's allocation state.
   const resetCurrentTree = () => {
     setTreeStates((prev) => {
       if (!prev[selectedTab]) return prev;
@@ -104,7 +109,21 @@ export const TalentTreeProvider = ({ children }: { children: React.ReactNode }) 
   };
 
   return (
-    <TalentTreeContext.Provider value={{ treeStates, selectedTab, selectTab, allocatePoint, deallocatePoint, totalPointsSpent, level, setLevel, availablePoints, resetCurrentTree, resetAllTrees }}>
+    <TalentTreeContext.Provider
+      value={{
+        treeStates,
+        selectedTab,
+        selectTab,
+        allocatePoint,
+        deallocatePoint,
+        totalPointsSpent,
+        level,
+        setLevel,
+        availablePoints,
+        resetCurrentTree,
+        resetAllTrees,
+      }}
+    >
       {children}
     </TalentTreeContext.Provider>
   );

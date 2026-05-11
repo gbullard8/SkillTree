@@ -1,4 +1,5 @@
-.talent-tree-container{
+/* Scales the framed tree panel from the available page stage. */
+.talent-tree-container {
   --talent-tree-ratio: 1.82;
   --talent-scale: 1;
   position: relative;
@@ -12,13 +13,13 @@
   border-image-source: url('../assets/talentbackground/c_full_header.png');
   border-image-slice: 240 170 170 170 fill;
   border-image-repeat: stretch;
-  
+
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  position: relative;
 }
 
+/* Absolute canvas that holds the nodes and connector SVG. */
 .skill-tree-grid {
   position: absolute;
   left: 50%;
@@ -26,12 +27,15 @@
   transform-origin: top center;
 }
 
-  html, body {
+/* Global reset for the full-page tree layout. */
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
 }
 
+/* Header text and level selector overlaid in the frame top border. */
 .talent-tree-topbar {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
@@ -48,6 +52,7 @@
   -webkit-user-select: none;
 }
 
+/* Disables topbar input by default so the overlay does not block the tree. */
 .talent-tree-topbar * {
   pointer-events: none;
 }
@@ -70,6 +75,7 @@
     0 2px 3px rgba(0, 0, 0, 0.75);
 }
 
+/* Places the level selector in the right topbar column. */
 .points-spent {
   grid-column: 3;
   justify-self: center;
@@ -78,10 +84,12 @@
   align-items: center;
 }
 
+/* Re-enables input for the level selector. */
 .points-spent, .points-spent * {
   pointer-events: all;
 }
 
+/* Displays remaining points in a decorative center banner. */
 .points-remaining-banner {
   position: relative;
   z-index: 4;
@@ -98,6 +106,7 @@
   pointer-events: none;
 }
 
+/* Adds the inset edge line for the points banner. */
 .points-remaining-banner::before {
   content: "";
   position: absolute;
@@ -108,6 +117,7 @@
   pointer-events: none;
 }
 
+/* Adds the soft outer shadow for the points banner. */
 .points-remaining-banner::after {
   content: "";
   position: absolute;
@@ -137,6 +147,7 @@
     0 2px 3px rgba(0, 0, 0, 0.8);
 }
 
+/* Turns the counter red when no points remain. */
 .points-remaining-banner.points-remaining-empty span {
   color: #b44a3a;
   text-shadow:
@@ -144,6 +155,7 @@
     0 2px 3px rgba(0, 0, 0, 0.85);
 }
 
+/* Shows active and passive labels above the split tree. */
 .active-passive-banner {
   position: relative;
   z-index: 2;
@@ -215,21 +227,18 @@
   background-position: left center;
 }
 
-.compare-toggle-btn:hover {
-  background: #3a300a;
-  border-color: #e8c87a;
-}
-
+/* Contains the scroll-clipped tree canvas. */
 .talent-tree-body {
-  flex: 1;                
+  flex: 1;
   display: flex;
-  min-height: 0;           
+  min-height: 0;
   padding: calc(8px * var(--talent-scale)) 0;
   position: relative;
   overflow: visible;
   isolation: isolate;
 }
 
+/* Clips the scaled skill grid to the framed body area. */
 .skill-tree-viewport {
   position: relative;
   flex: 1;
@@ -238,6 +247,7 @@
   overflow: hidden;
 }
 
+/* Divider between active and passive sides. */
 .talent-tree-body::before {
   content: "";
   position: absolute;
@@ -257,6 +267,7 @@
   z-index: 3;
 }
 
+/* Touch portrait fills the viewport height and allows horizontal page scroll. */
 @media (hover: none) and (pointer: coarse) and (orientation: portrait) {
   .talent-tree-container {
     width: calc(var(--page-layout-height) * var(--talent-tree-ratio));
@@ -266,6 +277,7 @@
   }
 }
 
+/* Touch landscape fills the available width while preserving tree ratio. */
 @media (hover: none) and (pointer: coarse) and (orientation: landscape) {
   .talent-tree-container {
     width: var(--page-layout-width);
