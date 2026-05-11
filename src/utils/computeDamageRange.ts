@@ -1,6 +1,7 @@
 import { SkillNode } from '../models/SkillNode';
 import { DAMAGE_VALUES, DamageValue } from '../data/damageValues';
 
+// Fallback weapon ranges used when a skill only exposes a multiplier.
 function getWeapon(node: SkillNode): { min: number; max: number } {
   if (node.skill.skillTags.includes(2)) return { min: 17, max: 22 };
   if (node.skill.skillTags.includes(4) && node.skill.skillType === 5) return { min: 14, max: 19 };
@@ -13,6 +14,7 @@ function formatValue(v: DamageValue): string {
   return min === max ? String(min) : `${min}-${max}`;
 }
 
+// Resolves displayed damage numbers from curated values or exported multipliers.
 export function computeDamageValues(node: SkillNode): DamageValue[] | null {
   const damageValues = DAMAGE_VALUES[node.skill.id];
   if (damageValues && damageValues.some(v => v.minDamage !== 0 || v.maxDamage !== 0)) {
@@ -31,7 +33,9 @@ export function computeDamageValues(node: SkillNode): DamageValue[] | null {
   return null;
 }
 
+// Replaces exported damage placeholders with highlighted display ranges.
 export function applyDamageRange(description: string, node: SkillNode): string {
+  // The source file can include a runtime-only section that is not relevant here.
   description = description.replace(/\s*Current Bonus:[\s\S]*/, '');
 
   const values = computeDamageValues(node);

@@ -1,22 +1,24 @@
+// Display names for weapon requirement ids from the exported action data.
 export const EQUIPMENT_TYPE_NAMES: Record<number, string> = {
-  0:  '1H Sword',
-  1:  '2H Axe',
-  2:  '2H Sword',
-  3:  'Polearm',
-  4:  'Bow',
-  5:  '1H Gun',
-  6:  '2H Gun',
-  7:  '1H Axe',
-  8:  'Staff',
-  9:  'Wand',
-  10: '1H Mace',
-  11: '2H Mace',
-  12: 'Unarmed',
-  13: 'Shield',
-  14: 'Fist Weapon',
-  15: 'None',
+    0: '1H Sword',
+    1: '2H Axe',
+    2: '2H Sword',
+    3: 'Polearm',
+    4: 'Bow',
+    5: '1H Gun',
+    6: '2H Gun',
+    7: '1H Axe',
+    8: 'Staff',
+    9: 'Wand',
+    10: '1H Mace',
+    11: '2H Mace',
+    12: 'Unarmed',
+    13: 'Shield',
+    14: 'Fist Weapon',
+    15: 'None',
 };
 
+// Normalized damage data used by tooltip damage calculations.
 export type DamageEffect = {
     rawExpression: string;
     statType: string;
@@ -25,6 +27,7 @@ export type DamageEffect = {
     damageMultiplier: number | null;
 };
 
+// Normalized status data from exported skill actions.
 export type StatusEffect = {
     name: string;
     infinite: boolean;
@@ -32,6 +35,7 @@ export type StatusEffect = {
     expireType: number;
 };
 
+// Wraps the raw action export with defaults for fields used by the UI.
 export class Action {
     name: string;
     overrideDescriptionAndName: boolean;

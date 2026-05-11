@@ -1,32 +1,34 @@
-  
-  .skill-node {
-    position: relative;
-    width: 64px;
-    aspect-ratio: 1 / 1;
-    background-image: url('../assets/talentbackground/mp2_frame_sliced.png');
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    margin-top: 0;
-    user-select: none;
-    -webkit-user-select: none;
-  }
+/* Base frame for each skill icon on the tree canvas. */
+.skill-node {
+  position: relative;
+  width: 64px;
+  aspect-ratio: 1 / 1;
+  background-image: url('../assets/talentbackground/mp2_frame_sliced.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-top: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
 
-  .skill-node-inner {
+/* Holds the icon art inside the frame inset. */
+.skill-node-inner {
   position: absolute;
-  inset: 8%;                 
+  inset: 8%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
- .skill-icon-art {
+/* Provides the layered icon surface shared by locked and unlocked states. */
+.skill-icon-art {
   position: relative;
   display: flex;
   width: 98%;
 }
 
-  .skill-icon-art::before {
+.skill-icon-art::before {
   content: "";
   position: absolute;
   inset: -2%;
@@ -39,7 +41,7 @@
   opacity: 0.72;
 }
 
-  .skill-icon-art::after {
+.skill-icon-art::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -50,9 +52,9 @@
   pointer-events: none;
   z-index: 2;
 }
-  
 
- .skill-icon {
+/* Defaults icons to grayscale until the allocated state restores color. */
+.skill-icon {
   width: 100%;
   object-fit: contain;
   pointer-events: none;
@@ -101,20 +103,8 @@
   opacity: 0.82;
 }
 
-.points {
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
-  font-size: 12px;
-  color: #f0e0a0;
-  font-weight: bold;
-  line-height: 1;
-  pointer-events: none;
-}
-
-
-
-  .skill-node.allocated::after {
+/* Adds the bright border around allocated skills. */
+.skill-node.allocated::after {
   content: "";
   position: absolute;
   inset: -2px;
@@ -127,226 +117,230 @@
   z-index: 1;
 }
 
-  
+/* Tooltip requirement, cost, and description text. */
+.skill-tooltip {
+  --tooltip-scale: 1;
+  width: calc(380px * var(--tooltip-scale));
+  box-sizing: border-box;
+  padding: calc(11px * var(--tooltip-scale)) calc(11px * var(--tooltip-scale)) calc(7px * var(--tooltip-scale));
+  background: transparent;
+  border: calc(10px * var(--tooltip-scale)) solid transparent;
+  border-image-source: url('../assets/talentbackground/select_dropdown_container sliced.png');
+  border-image-slice: 16 fill;
+  border-image-width: calc(10px * var(--tooltip-scale));
+  border-image-repeat: stretch;
+  color: #f0eee9;
+  z-index: 99999;
+  pointer-events: none;
+  font-family: Cambria, Georgia, 'Times New Roman', serif;
+  font-size: calc(16px * var(--tooltip-scale));
+  line-height: 1.18;
+  text-shadow: 0 calc(1px * var(--tooltip-scale)) calc(1px * var(--tooltip-scale)) #000;
+}
 
-  
-  /* Tooltip container — rendered via React Portal at document.body */
-  .skill-tooltip {
-    --tooltip-scale: 1;
-    width: calc(380px * var(--tooltip-scale));
-    box-sizing: border-box;
-    padding: calc(11px * var(--tooltip-scale)) calc(11px * var(--tooltip-scale)) calc(7px * var(--tooltip-scale));
-    background: transparent;
-    border: calc(10px * var(--tooltip-scale)) solid transparent;
-    border-image-source: url('../assets/talentbackground/select_dropdown_container sliced.png');
-    border-image-slice: 16 fill;
-    border-image-width: calc(10px * var(--tooltip-scale));
-    border-image-repeat: stretch;
-    color: #f0eee9;
-    z-index: 99999;
-    pointer-events: none;
-    font-family: Cambria, Georgia, 'Times New Roman', serif;
-    font-size: calc(16px * var(--tooltip-scale));
-    line-height: 1.18;
-    text-shadow: 0 calc(1px * var(--tooltip-scale)) calc(1px * var(--tooltip-scale)) #000;
-  }
+/* Hidden on desktop hover tooltips; visible for centered mobile tooltips. */
+.tooltip-close {
+  position: absolute;
+  display: none;
+  top: calc(8px * var(--tooltip-scale));
+  right: calc(8px * var(--tooltip-scale));
+  z-index: 4;
+  width: calc(33px * var(--tooltip-scale));
+  height: calc(33px * var(--tooltip-scale));
+  padding: 0;
+  border: 0;
+  background: url('../assets/talentbackground/c_header_close.png') center / contain no-repeat;
+  cursor: pointer;
+  pointer-events: auto;
+}
 
-  .tooltip-close {
-    position: absolute;
-    display: none;
-    top: calc(8px * var(--tooltip-scale));
-    right: calc(8px * var(--tooltip-scale));
-    z-index: 4;
-    width: calc(33px * var(--tooltip-scale));
-    height: calc(33px * var(--tooltip-scale));
-    padding: 0;
-    border: 0;
-    background: url('../assets/talentbackground/c_header_close.png') center / contain no-repeat;
-    cursor: pointer;
-    pointer-events: auto;
-  }
+.tooltip-close:hover,
+.tooltip-close:focus-visible {
+  filter: brightness(1.18);
+  outline: none;
+}
 
-  .tooltip-close:hover,
-  .tooltip-close:focus-visible {
-    filter: brightness(1.18);
-    outline: none;
-  }
+/* Tooltip title row with framed skill icon. */
+.tooltip-header {
+  display: flex;
+  align-items: center;
+  gap: calc(14px * var(--tooltip-scale));
+  padding-right: calc(40px * var(--tooltip-scale));
+  margin-bottom: calc(12px * var(--tooltip-scale));
+}
 
-  .tooltip-header {
-    display: flex;
-    align-items: center;
-    gap: calc(14px * var(--tooltip-scale));
-    padding-right: calc(40px * var(--tooltip-scale));
-    margin-bottom: calc(12px * var(--tooltip-scale));
-  }
+.tooltip-icon-frame {
+  position: relative;
+  display: flex;
+  width: calc(68px * var(--tooltip-scale));
+  height: calc(68px * var(--tooltip-scale));
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../assets/talentbackground/mp2_frame_sliced.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
-  .tooltip-icon-frame {
-    position: relative;
-    display: flex;
-    width: calc(68px * var(--tooltip-scale));
-    height: calc(68px * var(--tooltip-scale));
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: center;
-    background-image: url('../assets/talentbackground/mp2_frame_sliced.png');
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+.tooltip-icon-frame::before {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  background-image: url('../assets/talentbackground/tgb_avatar_overlay icon shadow overlay.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.72;
+}
 
-  .tooltip-icon-frame::before {
-    content: "";
-    position: absolute;
-    inset: 8%;
-    background-image: url('../assets/talentbackground/tgb_avatar_overlay icon shadow overlay.png');
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0.72;
-  }
+.tooltip-icon-frame::after {
+  content: "";
+  position: absolute;
+  inset: 9%;
+  background-image: url('../assets/talentbackground/inset_square_highlight.svg');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 2;
+}
 
-  .tooltip-icon-frame::after {
-    content: "";
-    position: absolute;
-    inset: 9%;
-    background-image: url('../assets/talentbackground/inset_square_highlight.svg');
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    pointer-events: none;
-    z-index: 2;
-  }
+.tooltip-icon {
+  width: calc(56px * var(--tooltip-scale));
+  height: calc(56px * var(--tooltip-scale));
+  object-fit: contain;
+  filter: none;
+}
 
-  .tooltip-icon {
-    width: calc(56px * var(--tooltip-scale));
-    height: calc(56px * var(--tooltip-scale));
-    object-fit: contain;
-    filter: none;
-  }
+.tooltip-title {
+  font-size: calc(22px * var(--tooltip-scale));
+  font-weight: bold;
+  color: #d8c197;
+  line-height: 1;
+  font-variant-caps: small-caps;
+  font-feature-settings: "smcp";
+  letter-spacing: 0;
+}
 
-  .tooltip-title {
-    font-size: calc(22px * var(--tooltip-scale));
-    font-weight: bold;
-    color: #d8c197;
-    line-height: 1;
-    font-variant-caps: small-caps;
-    font-feature-settings: "smcp";
-    letter-spacing: 0;
-  }
+.tooltip-divider {
+  border-top: calc(2px * var(--tooltip-scale)) solid rgba(116, 103, 78, 0.42);
+  margin: 0 0 calc(26px * var(--tooltip-scale));
+}
 
-  .tooltip-divider {
-    border-top: calc(2px * var(--tooltip-scale)) solid rgba(116, 103, 78, 0.42);
-    margin: 0 0 calc(26px * var(--tooltip-scale));
-  }
+/* Unlock requirement, cost, and description text blocks. */
+.tooltip-requires-more-points {
+  color: #c64334;
+  margin-bottom: calc(2px * var(--tooltip-scale));
+  font-weight: bold;
+  font-size: calc(14px * var(--tooltip-scale));
+}
 
-  .tooltip-requires-more-points {
-    color: #c64334;
-    margin-bottom: calc(2px * var(--tooltip-scale));
-    font-weight: bold;
-    font-size: calc(14px * var(--tooltip-scale));
-  }
+.tooltip-select-to-learn-text {
+  color: #f0eee9;
+  margin-bottom: calc(14px * var(--tooltip-scale));
+  font-size: calc(15px * var(--tooltip-scale));
+  font-weight: 600;
+}
 
-  .tooltip-select-to-learn-text {
-    color: #f0eee9;
-    margin-bottom: calc(14px * var(--tooltip-scale));
-    font-size: calc(15px * var(--tooltip-scale));
-    font-weight: 600;
-  }
+.tooltip-cost {
+  color: #d5bf98;
+  margin-bottom: calc(24px * var(--tooltip-scale));
+  font-size: calc(14px * var(--tooltip-scale));
+  font-weight: 600;
+}
 
-  .tooltip-cost {
-    color: #d5bf98;
-    margin-bottom: calc(24px * var(--tooltip-scale));
-    font-size: calc(14px * var(--tooltip-scale));
-    font-weight: 600;
-  }
+.tooltip-desc {
+  color: #f0eee9;
+  margin: 0 0 calc(18px * var(--tooltip-scale));
+  font-size: calc(15px * var(--tooltip-scale));
+  font-weight: 600;
+  line-height: 1.16;
+}
 
-  .tooltip-desc {
-    color: #f0eee9;
-    margin: 0 0 calc(18px * var(--tooltip-scale));
-    font-size: calc(15px * var(--tooltip-scale));
-    font-weight: 600;
-    line-height: 1.16;
-  }
+.tooltip-highlight {
+  color: #d5bf98;
+  text-transform: capitalize;
+}
 
-  .tooltip-highlight {
-    color: #d5bf98;
-    text-transform: capitalize;
-  }
+.tooltip-highlight-number {
+  text-transform: none;
+}
 
-  .tooltip-highlight-number {
-    text-transform: none;
-  }
+.tooltip-weapon-req {
+  color: #d5bf98;
+  margin-bottom: calc(14px * var(--tooltip-scale));
+  font-size: calc(14px * var(--tooltip-scale));
+  font-weight: 600;
+}
 
-  .tooltip-weapon-req {
-    color: #d5bf98;
-    margin-bottom: calc(14px * var(--tooltip-scale));
-    font-size: calc(14px * var(--tooltip-scale));
-    font-weight: 600;
-  }
+.tooltip-damage-applies {
+  color: #f0eee9;
+  margin-bottom: calc(18px * var(--tooltip-scale));
+  font-size: calc(14px * var(--tooltip-scale));
+  font-weight: 600;
+}
 
-  .tooltip-damage-applies {
-    color: #f0eee9;
-    margin-bottom: calc(18px * var(--tooltip-scale));
-    font-size: calc(14px * var(--tooltip-scale));
-    font-weight: 600;
-  }
+/* Compact stat list for non-passive skills. */
+.tooltip-stats {
+  border-top: 0;
+  padding-top: 0;
+  margin-top: calc(2px * var(--tooltip-scale));
+  display: flex;
+  flex-direction: column;
+  gap: calc(1px * var(--tooltip-scale));
+  color: #f0eee9;
+  font-size: calc(14px * var(--tooltip-scale));
+  font-weight: 600;
+  line-height: 1.12;
+}
 
-  .tooltip-stats {
-    border-top: 0;
-    padding-top: 0;
-    margin-top: calc(2px * var(--tooltip-scale));
-    display: flex;
-    flex-direction: column;
-    gap: calc(1px * var(--tooltip-scale));
-    color: #f0eee9;
-    font-size: calc(14px * var(--tooltip-scale));
-    font-weight: 600;
-    line-height: 1.12;
-  }
+/* Status descriptions collected from the skill text. */
+.tooltip-statuses {
+  margin-top: calc(24px * var(--tooltip-scale));
+  border-top: calc(2px * var(--tooltip-scale)) solid rgba(116, 103, 78, 0.42);
+  padding-top: calc(14px * var(--tooltip-scale));
+  display: flex;
+  flex-direction: column;
+  gap: calc(2px * var(--tooltip-scale));
+}
 
-  .tooltip-statuses {
-    margin-top: calc(24px * var(--tooltip-scale));
-    border-top: calc(2px * var(--tooltip-scale)) solid rgba(116, 103, 78, 0.42);
-    padding-top: calc(14px * var(--tooltip-scale));
-    display: flex;
-    flex-direction: column;
-    gap: calc(2px * var(--tooltip-scale));
-  }
+.tooltip-status-entry {
+  display: flex;
+  flex-direction: column;
+}
 
-  .tooltip-status-entry {
-    display: flex;
-    flex-direction: column;
-  }
+.tooltip-status-name {
+  color: #d5bf98;
+  font-style: italic;
+  font-size: calc(14px * var(--tooltip-scale));
+  font-weight: 600;
+}
 
-  .tooltip-status-name {
-    color: #d5bf98;
-    font-style: italic;
-    font-size: calc(14px * var(--tooltip-scale));
-    font-weight: 600;
-  }
+.tooltip-status-desc {
+  color: #d5bf98;
+  font-size: calc(14px * var(--tooltip-scale));
+  font-weight: 600;
+  line-height: 1.12;
+}
 
-  .tooltip-status-desc {
-    color: #d5bf98;
-    font-size: calc(14px * var(--tooltip-scale));
-    font-weight: 600;
-    line-height: 1.12;
-  }
+.tooltip-mobile-actions {
+  display: none;
+}
 
-  .tooltip-mobile-actions {
-    display: none;
-  }
+/* Click target behind centered touch tooltips. */
+.skill-tooltip-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 99998;
+  background: rgba(0, 0, 0, 0.45);
+  pointer-events: auto;
+  touch-action: none;
+}
 
-  .skill-tooltip-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 99998;
-    background: rgba(0, 0, 0, 0.45);
-    pointer-events: auto;
-    touch-action: none;
-  }
-
+/* Touch and tablet tooltips are centered, scrollable, and actionable. */
 @media (hover: none) and (pointer: coarse), (max-width: 1024px) {
   .skill-tooltip {
     max-width: 90vw;

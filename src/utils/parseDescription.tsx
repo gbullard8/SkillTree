@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Adds plain text while preserving line breaks as React nodes.
 function pushText(
   text: string,
   nodes: React.ReactNode[],
@@ -23,17 +24,20 @@ function pushText(
   });
 }
 
+// Converts Stolen Realm markup into tooltip nodes and collected status names.
 export function parseDescription(desc: string): {
   nodes: React.ReactNode[];
   statuses: string[];
 } {
   const statuses: string[] = [];
   const nodes: React.ReactNode[] = [];
+  // Matches status markers and highlighted values from exported descriptions.
   const pattern = /@([^@]+)@|\{STA=([^}]+)\}|\{HL=([^}]+)\}/g;
+  // Preserve paragraph breaks while scanning markup inside each section.
   const sections = desc.split(/(\n{2,})/);
   const counter = { i: 0 };
 
-  sections.forEach((section, sectionIndex) => {
+  sections.forEach((section) => {
     if (/^\n+$/.test(section)) {
       pushText(section, nodes, counter);
       return;

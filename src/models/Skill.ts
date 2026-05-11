@@ -1,3 +1,4 @@
+// Core skill metadata extracted from the raw skill export.
 export class Skill {
     id: string;
     skillName: string;
@@ -7,9 +8,6 @@ export class Skill {
     skillTags: number[];
     iconName: string;
     isPassive: boolean;
-    
-
-  
     constructor(data: any) {
       const skillData = data.Skill;
       this.id = skillData.id;

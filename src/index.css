@@ -1,3 +1,4 @@
+/* Global page reset and fallback background behind the app frame. */
 body {
   margin: 0;
   overflow: auto;
@@ -10,12 +11,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Ensures the root element can fill the viewport background. */
 html,
 #root {
   min-height: 100%;
   background: #100c09;
 }
 
+/* Default monospace stack for any rendered code text. */
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

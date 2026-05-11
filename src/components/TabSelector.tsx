@@ -1,5 +1,5 @@
 import './TabSelector.css';
-import { assetUrl } from '../utils/assetUrl';
+import { TAB_IMAGES } from '../data/tabImages';
 
 type Props = {
   tabs: string[];
@@ -8,20 +8,7 @@ type Props = {
   pointCounts: Record<string, number>;
 };
 
-const tabImages: Record<string, string> = {
-  Fire: assetUrl('/icons/aura_of_flame.png'),
-  Lightning: assetUrl('/icons/enchant_lightning.png'),
-  Cold: assetUrl('/icons/mass_freeze.png'),
-  Warrior: assetUrl('/icons/colossus.png'),
-  Light: assetUrl('/icons/mass_cure.png'),
-  Ranger: assetUrl('/tabs/Ranger.PNG'),
-  Shadow: assetUrl('/icons/soul_exchange.png'),
-  Thief: assetUrl('/icons/poison_weapon.png'),
-  Monk: assetUrl('/icons/meditation.png'),
-  Nature: assetUrl('/icons/mass_entangle.png'),
-  Chaos: assetUrl('/icons/perturb.png'),
-};
-
+// Renders the tree tabs with per-tree allocation counters.
 const TabSelector = ({ tabs, selected, onSelect, pointCounts }: Props) => (
   <div className="tab-bar">
     {tabs.map((tab) => (
@@ -38,7 +25,7 @@ const TabSelector = ({ tabs, selected, onSelect, pointCounts }: Props) => (
           </span>
         )}
         <span className="tab-button-art" aria-hidden="true">
-          <img className="tab-button-icon" src={tabImages[tab]} alt="" />
+          <img className="tab-button-icon" src={TAB_IMAGES[tab]} alt="" />
         </span>
         <span className="tab-button-label-frame">
           <span className="tab-button-label">{tab}</span>
