@@ -38,6 +38,8 @@ export const TalentTreeProvider = ({ children }: { children: React.ReactNode }) 
 
   const setLevel = (newLevel: number) => {
     const clampedLevel = Math.max(1, Math.min(30, newLevel));
+    if (clampedLevel + 2 < totalPointsSpent) return;
+
     setLevelState(clampedLevel);
   };
 

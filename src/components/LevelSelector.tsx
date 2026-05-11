@@ -6,11 +6,12 @@ const MAX_LEVEL = 30;
 
 // Controls the character level while preserving currently allocated points.
 const LevelSelector = () => {
-  const { level, setLevel } = useTalentTree();
+  const { level, setLevel, totalPointsSpent, availablePoints } = useTalentTree();
 
   const isAtMinLevel = level <= MIN_LEVEL;
   const isAtMaxLevel = level >= MAX_LEVEL;
-
+  const wouldOverspendAfterDecrement = availablePoints - 1 < totalPointsSpent;
+  const cannotDecrement = isAtMinLevel || wouldOverspendAfterDecrement;
 
   const increment = () => {
     if (isAtMaxLevel) return;
@@ -18,13 +19,13 @@ const LevelSelector = () => {
   };
 
   const decrement = () => {
-    if (isAtMinLevel) return;
+    if (cannotDecrement) return;
     setLevel(level - 1);
   };
 
   return (    
       <div className="level-selector">
-        <button className="level-btn" onClick={decrement} disabled={isAtMinLevel}>−</button>
+        <button className="level-btn" onClick={decrement} disabled={cannotDecrement}>-</button>
         <div className="level-display">
           <span className="level-label">Level:</span>
           <span className="level-number">{level}</span>
