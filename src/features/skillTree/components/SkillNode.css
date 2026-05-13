@@ -3,7 +3,7 @@
   position: relative;
   width: 64px;
   aspect-ratio: 1 / 1;
-  background-image: url('../assets/talentbackground/mp2_frame_sliced.png');
+  background-image: url('../../../assets/talentbackground/mp2_frame_sliced.png');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -32,7 +32,7 @@
   content: "";
   position: absolute;
   inset: -2%;
-  background-image: url('../assets/talentbackground/tgb_avatar_overlay icon shadow overlay.png');
+  background-image: url('../../../assets/talentbackground/tgb_avatar_overlay icon shadow overlay.png');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -45,7 +45,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('../assets/talentbackground/inset_square_highlight.svg');
+  background-image: url('../../../assets/talentbackground/inset_square_highlight.svg');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -94,7 +94,7 @@
   margin: auto;
   width: 34%;
   aspect-ratio: 1 / 1;
-  background-image: url('../assets/talentbackground/icons8-lock-90.png');
+  background-image: url('../../../assets/talentbackground/icons8-lock-90.png');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -108,7 +108,7 @@
   content: "";
   position: absolute;
   inset: -2px;
-  background-image: url('../assets/talentbackground/mp2_frame sliced_white_bright_border.png');
+  background-image: url('../../../assets/talentbackground/mp2_frame sliced_white_bright_border.png');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -125,7 +125,7 @@
   padding: calc(11px * var(--tooltip-scale)) calc(11px * var(--tooltip-scale)) calc(7px * var(--tooltip-scale));
   background: transparent;
   border: calc(10px * var(--tooltip-scale)) solid transparent;
-  border-image-source: url('../assets/talentbackground/select_dropdown_container sliced.png');
+  border-image-source: url('../../../assets/talentbackground/select_dropdown_container sliced.png');
   border-image-slice: 16 fill;
   border-image-width: calc(10px * var(--tooltip-scale));
   border-image-repeat: stretch;
@@ -149,7 +149,7 @@
   height: calc(33px * var(--tooltip-scale));
   padding: 0;
   border: 0;
-  background: url('../assets/talentbackground/c_header_close.png') center / contain no-repeat;
+  background: url('../../../assets/talentbackground/c_header_close.png') center / contain no-repeat;
   cursor: pointer;
   pointer-events: auto;
 }
@@ -177,7 +177,7 @@
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  background-image: url('../assets/talentbackground/mp2_frame_sliced.png');
+  background-image: url('../../../assets/talentbackground/mp2_frame_sliced.png');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -187,7 +187,7 @@
   content: "";
   position: absolute;
   inset: 8%;
-  background-image: url('../assets/talentbackground/tgb_avatar_overlay icon shadow overlay.png');
+  background-image: url('../../../assets/talentbackground/tgb_avatar_overlay icon shadow overlay.png');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -200,7 +200,7 @@
   content: "";
   position: absolute;
   inset: 9%;
-  background-image: url('../assets/talentbackground/inset_square_highlight.svg');
+  background-image: url('../../../assets/talentbackground/inset_square_highlight.svg');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -368,7 +368,7 @@
     min-height: calc(42px * var(--tooltip-scale));
     padding: calc(8px * var(--tooltip-scale)) calc(14px * var(--tooltip-scale));
     border: 0;
-    background: url('../assets/talentbackground/mp2_frame sliced icon text & allocation.png') center / 100% 100% no-repeat;
+    background: url('../../../assets/talentbackground/mp2_frame sliced icon text & allocation.png') center / 100% 100% no-repeat;
     color: #d8c197;
     cursor: pointer;
     font-family: Georgia, 'Times New Roman', serif;

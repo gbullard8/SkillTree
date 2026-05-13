@@ -1,6 +1,6 @@
 /* Full-width strip that holds reset controls and tree tabs. */
 .tab-header-container {
-  background-image: url('../assets/talentbackground/not_container_3.png');
+  background-image: url('../../../assets/talentbackground/not_container_3.png');
   background-size: 98.5% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -60,7 +60,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('../assets/talentbackground/mp2_frame sliced icon text & allocation.png');
+  background-image: url('../../../assets/talentbackground/mp2_frame sliced icon text & allocation.png');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -112,7 +112,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('../assets/talentbackground/mp2_frame_sliced.png');
+  background-image: url('../../../assets/talentbackground/mp2_frame_sliced.png');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -140,7 +140,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('../assets/talentbackground/mp2_frame_sliced.png');
+  background-image: url('../../../assets/talentbackground/mp2_frame_sliced.png');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -163,7 +163,7 @@
   content: "";
   position: absolute;
   inset: -2%;
-  background-image: url('../assets/talentbackground/tgb_avatar_overlay icon shadow overlay.png');
+  background-image: url('../../../assets/talentbackground/tgb_avatar_overlay icon shadow overlay.png');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -176,7 +176,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('../assets/talentbackground/inset_square_highlight.svg');
+  background-image: url('../../../assets/talentbackground/inset_square_highlight.svg');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -210,7 +210,7 @@
   border-style: solid;
   border-color: transparent;
   border-width: calc(3px * var(--talent-scale)) calc(6px * var(--talent-scale)) calc(7px * var(--talent-scale));
-  border-image-source: url('../assets/talentbackground/mp2_frame_sliced.png');
+  border-image-source: url('../../../assets/talentbackground/mp2_frame_sliced.png');
   border-image-slice: 34 34 108 34 fill;
   border-image-width: calc(3px * var(--talent-scale)) calc(6px * var(--talent-scale)) calc(7px * var(--talent-scale));
   border-image-repeat: stretch;
@@ -235,7 +235,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('../assets/talentbackground/mp2_frame sliced_white_bright_border.png');
+  background-image: url('../../../assets/talentbackground/mp2_frame sliced_white_bright_border.png');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;

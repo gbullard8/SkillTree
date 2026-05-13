@@ -6,7 +6,7 @@ import SkillConnectors from './SkillConnectors';
 import TabSelector from './TabSelector';
 import LevelSelector from './LevelSelector';
 import { TREE_CANVAS_HEIGHT, TREE_CANVAS_WIDTH } from '../utils/treeCanvasLayout';
-import { skillIconUrl } from '../utils/assetUrl';
+import { skillIconUrl } from '../../../utils/assetUrl';
 import { TAB_IMAGES } from '../data/tabImages';
 import './TalentTree.css';
 

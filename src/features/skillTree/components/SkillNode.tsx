@@ -3,7 +3,7 @@ import { SkillNode } from '../models/SkillNode';
 import { useTalentTree } from '../context/TalentTreeContext';
 import { canUnlock, canDeallocate } from '../utils/canUnlock';
 import { getNodeLeft, getNodeTop } from '../utils/treeCanvasLayout';
-import { assetUrl, skillIconUrl } from '../utils/assetUrl';
+import { assetUrl, skillIconUrl } from '../../../utils/assetUrl';
 import SkillTooltip from './SkillTooltip';
 import { shouldCenterTooltip, useSkillTooltipPosition } from './useSkillTooltipPosition';
 import './SkillNode.css';

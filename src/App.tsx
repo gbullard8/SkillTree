@@ -1,5 +1,5 @@
 import './App.css';
-import TalentTree from './components/TalentTree';
+import SkillTreePage from './features/skillTree/SkillTreePage';
 import { assetUrl } from './utils/assetUrl';
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
             draggable={false}
           />
         </div>
-        <TalentTree />
+        <SkillTreePage />
       </div>
     </div>
   );

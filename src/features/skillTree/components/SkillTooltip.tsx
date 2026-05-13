@@ -18,7 +18,7 @@ import {
   SPECIAL_BLAST_RADIUS_SKILLS,
   SPECIAL_RANGE_SKILLS,
 } from '../data/specialValues';
-import { assetUrl, skillIconUrl } from '../utils/assetUrl';
+import { assetUrl, skillIconUrl } from '../../../utils/assetUrl';
 import { SkillTooltipAnchor, SkillTooltipLayout } from './useSkillTooltipPosition';
 
 type Props = {

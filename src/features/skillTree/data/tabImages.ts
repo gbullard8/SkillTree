@@ -1,4 +1,4 @@
-import { assetUrl } from '../utils/assetUrl';
+import { assetUrl } from '../../../utils/assetUrl';
 
 // Display icons for each tree tab.
 export const TAB_IMAGES: Record<string, string> = {
