@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { getSkillPointCost } from '../utils/CanUnlock';
+import { getSkillPointCost } from '../utils/canUnlock';
 
 export type TreeState = {
   pointsSpent: number;
